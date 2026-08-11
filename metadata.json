@@ -1,0 +1,6 @@
+{
+  "name": "Mapa de Procesos - Decanatura Académica ENAP",
+  "description": "Navegación institucional interactiva de tres niveles con zoom estilo Prezi y apertura 3D de cajas de procesos para la Escuela Naval de Cadetes Almirante Padilla.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
