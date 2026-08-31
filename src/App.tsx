@@ -714,10 +714,10 @@ export default function App() {
                       </button>
                     )}
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-extrabold text-[#0A1F3C] tracking-tight mb-2">
+                  <h2 className="text-2xl lg:text-3xl font-extrabold text-[#0A1F3C] tracking-tight mb-1.5">
                     {appData.headerNivel1.titulo}
                   </h2>
-                  <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-xs sm:text-[13px] text-slate-600 max-w-2xl mx-auto leading-relaxed">
                     {appData.headerNivel1.descripcion}
                   </p>
                 </div>
@@ -727,10 +727,10 @@ export default function App() {
                   <div className="flex flex-col xl:flex-row items-stretch justify-between gap-4 relative z-10 w-full">
                     
                     {/* BLOQUE DE ENTRADA (LADO IZQUIERDO) */}
-                    <div className="xl:w-[230px] shrink-0 bg-white border-2 border-slate-200 rounded-2xl p-6 min-h-[290px] flex flex-col justify-between shadow-md relative group hover:border-[#0A1F3C] transition-all">
+                    <div className="xl:w-[230px] shrink-0 bg-white border-2 border-slate-200 rounded-2xl p-5 min-h-[280px] flex flex-col justify-between shadow-md relative group hover:border-[#0A1F3C] transition-all">
                       <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-[10px] font-mono font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md uppercase tracking-wider">
+                        <div className="flex items-center justify-between mb-2.5">
+                          <span className="text-[9px] font-mono font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
                             {appData.entrada.tag}
                           </span>
                           <div className="flex items-center gap-1.5">
@@ -738,7 +738,7 @@ export default function App() {
                               <button
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); setEditingGate('entrada'); }}
-                                className="p-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
+                                className="p-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[9px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
                                 title="Editar Caja de Entrada"
                               >
                                 <Edit3 className="w-3 h-3 text-[#8A651E]" />
@@ -748,18 +748,18 @@ export default function App() {
                             <User className="w-4 h-4 text-[#0A1F3C]" />
                           </div>
                         </div>
-                        <h3 className="text-lg font-extrabold text-[#0A1F3C] mb-1 leading-tight">
+                        <h3 className="text-base font-extrabold text-[#0A1F3C] mb-1 leading-tight">
                           {appData.entrada.titulo}
                         </h3>
-                        <p className="text-xs font-bold text-[#C6A15B] uppercase tracking-wider mb-2">
+                        <p className="text-[11px] font-bold text-[#C6A15B] uppercase tracking-wider mb-1.5">
                           {appData.entrada.subtitulo}
                         </p>
-                        <p className="text-xs text-slate-600 leading-relaxed">
+                        <p className="text-[11px] text-slate-600 leading-relaxed">
                           {appData.entrada.descripcion}
                         </p>
                       </div>
 
-                      <div className="pt-3 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono font-bold text-slate-500">
+                      <div className="pt-2.5 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500">
                         <span>{appData.entrada.pie}</span>
                         <ArrowRight className="w-4 h-4 text-[#C6A15B] animate-pulse hidden xl:block" />
                         <ArrowDown className="w-4 h-4 text-[#C6A15B] animate-pulse xl:hidden" />
@@ -788,13 +788,13 @@ export default function App() {
                               whileHover={{ y: -4, rotateX: 2 }}
                               whileTap={{ scale: 0.98 }}
                               className={cn(
-                                "process-box-card w-full text-left pt-14 pb-5 px-6 relative flex flex-col justify-between transition-all cursor-pointer outline-none group min-h-[290px] h-full overflow-hidden",
+                                "process-box-card w-full text-left pt-14 pb-4 px-5 relative flex flex-col justify-between transition-all cursor-pointer outline-none group min-h-[280px] h-full overflow-hidden",
                                 isOpening ? "is-opening border-[#0A1F3C] ring-2 ring-[#C6A15B]" : ""
                               )}
                             >
                               {/* TAPA SUPERIOR FÍSICA DE LA CAJA */}
                               <div className="process-box-lid flex items-center justify-between">
-                                <span className="font-mono text-[11px] font-extrabold text-[#C6A15B] tracking-wider uppercase flex items-center gap-1.5">
+                                <span className="font-mono text-[10px] font-extrabold text-[#C6A15B] tracking-wider uppercase flex items-center gap-1.5">
                                   <Box className="w-3.5 h-3.5 text-[#C6A15B]" />
                                   CAJA DE PROCESO
                                 </span>
@@ -807,7 +807,7 @@ export default function App() {
                                         e.stopPropagation();
                                         setEditingProcessKey(key);
                                       }}
-                                      className="relative z-30 px-2 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[10px] font-bold flex items-center gap-1 shadow-xs transition-colors cursor-pointer"
+                                      className="relative z-30 px-2 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[9px] font-bold flex items-center gap-1 shadow-xs transition-colors cursor-pointer"
                                       title="Editar textos de esta caja de proceso"
                                     >
                                       <Edit3 className="w-3 h-3 text-[#8A651E]" />
@@ -831,12 +831,12 @@ export default function App() {
                                     transition={{ repeat: Infinity, duration: 0.8 }}
                                     className="bg-[#C6A15B] text-[#0A1F3C] p-2.5 rounded-xl shadow-lg mb-2"
                                   >
-                                    <Box className="w-6 h-6" />
+                                    <Box className="w-5 h-5" />
                                   </motion.div>
-                                  <span className="font-mono text-xs font-black text-[#C6A15B] uppercase tracking-wider mb-0.5">
+                                  <span className="font-mono text-[11px] font-black text-[#C6A15B] uppercase tracking-wider mb-0.5">
                                     ¡Abre la Caja!
                                   </span>
-                                  <span className="text-[11px] font-medium text-slate-200">
+                                  <span className="text-[10px] font-medium text-slate-200">
                                     Saliendo {proc.subprocesos?.length || 0} subprocesos...
                                   </span>
                                 </motion.div>
@@ -845,27 +845,27 @@ export default function App() {
                               {/* CUERPO PRINCIPAL DE LA CAJA */}
                               <div className="flex flex-col relative z-10 w-full mt-1">
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="font-mono text-[10px] font-bold text-slate-500 uppercase tracking-wide">
+                                  <span className="font-mono text-[9px] font-bold text-slate-500 uppercase tracking-wide">
                                     Contenido Interno:
                                   </span>
-                                  <span className="font-mono text-[11px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-full">
+                                  <span className="font-mono text-[10px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
                                     {proc.subprocesos?.length || 0} Subprocesos
                                   </span>
                                 </div>
 
-                                <h3 className="text-base sm:text-lg font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug mb-2">
+                                <h3 className="text-sm sm:text-base font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug mb-1.5">
                                   {proc.titulo}
                                 </h3>
 
-                                <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-3">
+                                <p className="text-[11px] text-slate-600 font-medium leading-relaxed line-clamp-3">
                                   {proc.resumen}
                                 </p>
                               </div>
 
                               {/* Pie de la Caja - Botón de Apertura */}
-                              <div className="relative z-10 pt-3 mt-4 border-t border-slate-100 flex items-center justify-between">
-                                <span className="text-xs font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] flex items-center gap-1 transition-transform group-hover:translate-x-1 ml-auto">
-                                  Abrir Caja <ChevronRight className="w-4 h-4 text-[#C6A15B]" />
+                              <div className="relative z-10 pt-2.5 mt-3 border-t border-slate-100 flex items-center justify-between">
+                                <span className="text-[11px] font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] flex items-center gap-1 transition-transform group-hover:translate-x-1 ml-auto">
+                                  Abrir Caja <ChevronRight className="w-3.5 h-3.5 text-[#C6A15B]" />
                                 </span>
                               </div>
                             </motion.button>
@@ -873,7 +873,7 @@ export default function App() {
                             {/* Controles de Reordenación de Proceso en Modo Edición */}
                             {isAdmin && isEditMode && (
                               <div className="flex items-center justify-between mt-2 px-3 py-1.5 bg-amber-50/90 border border-amber-200 rounded-xl shadow-2xs">
-                                <span className="text-[11px] font-mono font-bold text-slate-600">
+                                <span className="text-[10px] font-mono font-bold text-slate-600">
                                   Posición <strong className="text-[#0A1F3C]">{idx + 1}</strong> de {processKeys.length}
                                 </span>
                                 <div className="flex items-center gap-1.5">
@@ -881,21 +881,21 @@ export default function App() {
                                     type="button"
                                     disabled={idx === 0}
                                     onClick={() => handleMoveProcess(key, 'left')}
-                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[11px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
+                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
                                     title="Mover caja a la izquierda (antes)"
                                   >
-                                    <ChevronLeft className="w-3.5 h-3.5" />
+                                    <ChevronLeft className="w-3 h-3" />
                                     <span>Antes</span>
                                   </button>
                                   <button
                                     type="button"
                                     disabled={idx === processKeys.length - 1}
                                     onClick={() => handleMoveProcess(key, 'right')}
-                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[11px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
+                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
                                     title="Mover caja a la derecha (después)"
                                   >
                                     <span>Después</span>
-                                    <ChevronRight className="w-3.5 h-3.5" />
+                                    <ChevronRight className="w-3 h-3" />
                                   </button>
                                 </div>
                               </div>
@@ -911,9 +911,9 @@ export default function App() {
                                 </div>
 
                                 <div className="flex md:hidden justify-center my-3 z-20">
-                                  <div className="bg-[#0A1F3C] text-[#C6A15B] border-2 border-[#C6A15B] px-3 py-1 rounded-full shadow-md flex items-center gap-2 text-xs font-mono font-bold">
+                                  <div className="bg-[#0A1F3C] text-[#C6A15B] border-2 border-[#C6A15B] px-3 py-1 rounded-full shadow-md flex items-center gap-2 text-[11px] font-mono font-bold">
                                     <span>Siguiente proceso</span>
-                                    <ArrowDown className="w-4 h-4 text-[#C6A15B] animate-bounce" />
+                                    <ArrowDown className="w-3.5 h-3.5 text-[#C6A15B] animate-bounce" />
                                   </div>
                                 </div>
                               </>
@@ -927,15 +927,15 @@ export default function App() {
                         <div className="relative flex flex-col w-full">
                           <button
                             onClick={() => setEditingProcessKey('new')}
-                            className="w-full h-full min-h-[290px] p-6 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white/70 hover:bg-white rounded-2xl flex flex-col items-center justify-center text-center transition-all cursor-pointer group shadow-xs hover:shadow-md"
+                            className="w-full h-full min-h-[280px] p-5 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white/70 hover:bg-white rounded-2xl flex flex-col items-center justify-center text-center transition-all cursor-pointer group shadow-xs hover:shadow-md"
                           >
-                            <div className="p-3 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-md group-hover:scale-110 transition-transform mb-2">
-                              <Plus className="w-6 h-6" />
+                            <div className="p-2.5 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-md group-hover:scale-110 transition-transform mb-2">
+                              <Plus className="w-5 h-5" />
                             </div>
-                            <span className="font-mono text-xs font-black text-[#0A1F3C] uppercase tracking-wider">
+                            <span className="font-mono text-[11px] font-black text-[#0A1F3C] uppercase tracking-wider">
                               + Agregar Nueva Caja
                             </span>
-                            <span className="text-[11px] text-slate-500 mt-1">
+                            <span className="text-[10px] text-slate-500 mt-1">
                               Crear nuevo proceso en el flujo
                             </span>
                           </button>
@@ -944,7 +944,7 @@ export default function App() {
                     </div>
 
                     {/* BLOQUE DE SALIDA (LADO DERECHO) */}
-                    <div className="xl:w-[230px] shrink-0 bg-[#FEF8EC] border-2 border-[#C6A15B] rounded-2xl p-6 min-h-[290px] flex flex-col justify-between shadow-md relative group hover:shadow-xl transition-all">
+                    <div className="xl:w-[230px] shrink-0 bg-[#FEF8EC] border-2 border-[#C6A15B] rounded-2xl p-5 min-h-[280px] flex flex-col justify-between shadow-md relative group hover:shadow-xl transition-all">
                       <div className="hidden xl:flex absolute -left-5 top-1/2 -translate-y-1/2 z-30 pointer-events-none">
                         <div className="bg-[#0A1F3C] text-[#C6A15B] border-2 border-[#C6A15B] rounded-full p-1.5 shadow-lg">
                           <ArrowRight className="w-4 h-4 animate-pulse" />
@@ -952,8 +952,8 @@ export default function App() {
                       </div>
 
                       <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-[10px] font-mono font-extrabold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2.5 py-1 rounded-md uppercase tracking-wider">
+                        <div className="flex items-center justify-between mb-2.5">
+                          <span className="text-[9px] font-mono font-extrabold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2 py-0.5 rounded-md uppercase tracking-wider">
                             {appData.salida.tag}
                           </span>
                           <div className="flex items-center gap-1.5">
@@ -961,30 +961,30 @@ export default function App() {
                               <button
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); setEditingGate('salida'); }}
-                                className="p-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[10px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
+                                className="p-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[9px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
                                 title="Editar Caja de Salida"
                               >
                                 <Edit3 className="w-3 h-3 text-[#8A651E]" />
                                 <span>Editar</span>
                               </button>
                             )}
-                            <GraduationCap className="w-5 h-5 text-[#8A651E]" />
+                            <GraduationCap className="w-4 h-4 text-[#8A651E]" />
                           </div>
                         </div>
-                        <h3 className="text-lg font-extrabold text-[#0A1F3C] mb-1 leading-tight">
+                        <h3 className="text-base font-extrabold text-[#0A1F3C] mb-1 leading-tight">
                           {appData.salida.titulo}
                         </h3>
-                        <p className="text-xs font-bold text-[#8A651E] uppercase tracking-wider mb-2">
+                        <p className="text-[11px] font-bold text-[#8A651E] uppercase tracking-wider mb-1.5">
                           {appData.salida.subtitulo}
                         </p>
-                        <p className="text-xs text-slate-700 leading-relaxed">
+                        <p className="text-[11px] text-slate-700 leading-relaxed">
                           {appData.salida.descripcion}
                         </p>
                       </div>
 
-                      <div className="pt-3 mt-4 border-t border-[#C6A15B]/30 flex items-center justify-between text-xs font-mono font-bold text-[#8A651E]">
+                      <div className="pt-2.5 mt-3 border-t border-[#C6A15B]/30 flex items-center justify-between text-[11px] font-mono font-bold text-[#8A651E]">
                         <span>{appData.salida.pie}</span>
-                        <CheckCircle2 className="w-4 h-4 text-[#8A651E]" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#8A651E]" />
                       </div>
                     </div>
 
@@ -1042,10 +1042,10 @@ export default function App() {
                       </button>
                     )}
                   </div>
-                  <h2 className="text-3xl font-extrabold text-[#0A1F3C] mb-2">
+                  <h2 className="text-2xl font-extrabold text-[#0A1F3C] mb-1.5">
                     <span>{activeProcess.titulo}</span>
                   </h2>
-                  <p className="text-sm text-slate-600 max-w-2xl mx-auto">
+                  <p className="text-xs sm:text-[13px] text-slate-600 max-w-2xl mx-auto leading-relaxed">
                     {activeProcess.descripcion} Seleccione cualquiera de los pasos para ver sus detalles completos.
                   </p>
                 </div>
@@ -1080,7 +1080,7 @@ export default function App() {
                               show: { 
                                 y: 0, 
                                 opacity: 1, 
-                                scale: 1,
+                                scale: 1, 
                                 transition: { type: "spring", stiffness: 300, damping: 22 }
                               }
                             }}
@@ -1088,11 +1088,11 @@ export default function App() {
                           >
                             <button
                               onClick={() => openSubBox(activeProcessKey, idx)}
-                              className="flow-subcard text-left bg-white p-5 sm:p-6 flex flex-col justify-between cursor-pointer group shadow-xs hover:shadow-md transition-all relative border-2 border-slate-200 hover:border-[#0A1F3C] rounded-2xl h-full min-h-[220px]"
+                              className="flow-subcard text-left bg-white p-4 sm:p-5 flex flex-col justify-between cursor-pointer group shadow-xs hover:shadow-md transition-all relative border-2 border-slate-200 hover:border-[#0A1F3C] rounded-2xl h-full min-h-[200px]"
                             >
                               <div>
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="font-mono text-[11px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-md">
+                                  <span className="font-mono text-[10px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
                                     Paso {sub.stepNum} ({sub.id})
                                   </span>
                                   <div className="flex items-center gap-1.5">
@@ -1103,41 +1103,41 @@ export default function App() {
                                           e.stopPropagation();
                                           setEditingSubprocess({ procKey: activeProcessKey, subIndex: idx });
                                         }}
-                                        className="px-1.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[10px] font-bold flex items-center gap-0.5 shadow-2xs transition-colors cursor-pointer"
+                                        className="px-1.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[9px] font-bold flex items-center gap-0.5 shadow-2xs transition-colors cursor-pointer"
                                         title="Editar este paso"
                                       >
                                         <Edit3 className="w-2.5 h-2.5 text-[#8A651E]" />
                                         <span>Editar</span>
                                       </button>
                                     )}
-                                    <span className="text-[10px] font-mono font-bold text-[#C6A15B] bg-[#0A1F3C] px-2 py-0.5 rounded-full">
+                                    <span className="text-[9px] font-mono font-bold text-[#C6A15B] bg-[#0A1F3C] px-1.5 py-0.5 rounded-full">
                                       {sub.stepNum} / {activeProcess.subprocesos.length}
                                     </span>
                                   </div>
                                 </div>
 
-                                <h4 className="text-base sm:text-lg font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug my-1.5">
+                                <h4 className="text-sm sm:text-base font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug my-1">
                                   {sub.titulo}
                                 </h4>
 
-                                <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-2">
+                                <p className="text-[11px] text-slate-600 leading-relaxed line-clamp-3 mb-2">
                                   {sub.resumen}
                                 </p>
                               </div>
 
-                              <div className="pt-3 mt-2 border-t border-slate-100 text-xs font-semibold text-[#0A1F3C] flex items-center justify-between">
-                                <span className="text-[11px] text-slate-600 font-medium truncate max-w-[170px]" title={sub.responsable}>
+                              <div className="pt-2.5 mt-2 border-t border-slate-100 text-xs font-semibold text-[#0A1F3C] flex items-center justify-between">
+                                <span className="text-[10px] text-slate-600 font-medium truncate max-w-[170px]" title={sub.responsable}>
                                   <span className="text-slate-400 font-bold">Resp:</span> {sub.responsable}
                                 </span>
-                                <span className="flex items-center gap-0.5 font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] text-[11px]">
-                                  Ver <ChevronRight className="w-3.5 h-3.5 text-[#C6A15B] group-hover:translate-x-0.5 transition-transform" />
+                                <span className="flex items-center gap-0.5 font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] text-[10px]">
+                                  Ver <ChevronRight className="w-3 h-3 text-[#C6A15B] group-hover:translate-x-0.5 transition-transform" />
                                 </span>
                               </div>
 
                               {/* Reordenación de Subprocesos en Modo Admin */}
                               {isAdmin && isEditMode && (
                                 <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-amber-200/70 bg-amber-50/60 px-2 py-1 rounded-md">
-                                  <span className="text-[10px] font-mono font-bold text-slate-500">Paso {sub.stepNum}/{activeProcess.subprocesos.length}</span>
+                                  <span className="text-[9px] font-mono font-bold text-slate-500">Paso {sub.stepNum}/{activeProcess.subprocesos.length}</span>
                                   <div className="flex items-center gap-1">
                                     <button
                                       type="button"
@@ -1146,7 +1146,7 @@ export default function App() {
                                         e.stopPropagation();
                                         handleMoveSubprocess(activeProcessKey, idx, 'left');
                                       }}
-                                      className="p-1 rounded bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 disabled:opacity-25 disabled:cursor-not-allowed text-[10px] font-bold flex items-center cursor-pointer shadow-2xs"
+                                      className="p-1 rounded bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 disabled:opacity-25 disabled:cursor-not-allowed text-[9px] font-bold flex items-center cursor-pointer shadow-2xs"
                                       title="Mover paso a la izquierda (antes)"
                                     >
                                       <ChevronLeft className="w-3 h-3" />
@@ -1158,7 +1158,7 @@ export default function App() {
                                         e.stopPropagation();
                                         handleMoveSubprocess(activeProcessKey, idx, 'right');
                                       }}
-                                      className="p-1 rounded bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 disabled:opacity-25 disabled:cursor-not-allowed text-[10px] font-bold flex items-center cursor-pointer shadow-2xs"
+                                      className="p-1 rounded bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 disabled:opacity-25 disabled:cursor-not-allowed text-[9px] font-bold flex items-center cursor-pointer shadow-2xs"
                                       title="Mover paso a la derecha (después)"
                                     >
                                       <ChevronRight className="w-3 h-3" />
@@ -1291,42 +1291,42 @@ export default function App() {
                 {/* Tarjeta de Detalle del Subproceso */}
                 <div className="detail-card w-full bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-xl">
                   {/* Encabezado del Detalle */}
-                  <div className="flex flex-wrap items-start justify-between gap-4 pb-6 mb-6 border-b border-slate-100">
+                  <div className="flex flex-wrap items-start justify-between gap-4 pb-5 mb-5 border-b border-slate-100">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <span className="font-mono text-xs font-bold text-[#0A1F3C] bg-slate-100 px-3 py-1 rounded-md border border-slate-200 inline-block">
+                        <span className="font-mono text-[11px] font-bold text-[#0A1F3C] bg-slate-100 px-2.5 py-0.5 rounded-md border border-slate-200 inline-block">
                           SUBPROCESO <span className="text-[#C6A15B]">{activeSubprocess.id}</span> · PASO {activeSubprocess.stepNum} DE {activeProcess.subprocesos.length}
                         </span>
                         {isAdmin && isEditMode && (
                           <button
                             onClick={() => setEditingSubprocess({ procKey: activeProcessKey, subIndex: activeSubIndex })}
-                            className="px-3 py-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
+                            className="px-2.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[11px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
                             title="Modificar los textos y listas de este paso"
                           >
-                            <Edit3 className="w-3.5 h-3.5 text-[#8A651E]" />
+                            <Edit3 className="w-3 h-3 text-[#8A651E]" />
                             <span>Editar este Paso</span>
                           </button>
                         )}
                       </div>
-                      <h2 className="text-2xl lg:text-3xl font-extrabold text-[#0A1F3C] tracking-tight mt-1">
+                      <h2 className="text-xl lg:text-2xl font-extrabold text-[#0A1F3C] tracking-tight mt-1">
                         {activeSubprocess.titulo}
                       </h2>
-                      <p className="text-sm text-slate-600 mt-1 font-medium">
+                      <p className="text-xs sm:text-[13px] text-slate-600 mt-1 font-medium leading-relaxed">
                         {activeSubprocess.resumen}
                       </p>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 bg-gradient-to-r from-[#0A1F3C]/5 via-[#C6A15B]/10 to-transparent border-2 border-[#C6A15B]/40 p-4 rounded-xl shadow-xs">
-                      <div className="w-10 h-10 rounded-xl bg-[#0A1F3C] text-[#C6A15B] flex items-center justify-center shrink-0 shadow-sm">
-                        <User className="w-5 h-5" />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 bg-gradient-to-r from-[#0A1F3C]/5 via-[#C6A15B]/10 to-transparent border-2 border-[#C6A15B]/40 p-3.5 rounded-xl shadow-xs">
+                      <div className="w-9 h-9 rounded-xl bg-[#0A1F3C] text-[#C6A15B] flex items-center justify-center shrink-0 shadow-sm">
+                        <User className="w-4 h-4" />
                       </div>
                       <div className="flex flex-col flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2 py-0.5 rounded uppercase tracking-wider">
+                          <span className="text-[9px] font-mono font-bold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2 py-0.5 rounded uppercase tracking-wider">
                             Responsable Directo / Rol
                           </span>
                         </div>
-                        <span className="text-sm font-extrabold text-[#0A1F3C] mt-0.5">
+                        <span className="text-xs sm:text-[13px] font-extrabold text-[#0A1F3C] mt-0.5">
                           {activeSubprocess.responsable}
                         </span>
                       </div>
@@ -1334,16 +1334,16 @@ export default function App() {
                   </div>
 
                   {/* Grid de 2 Columnas: Qué se hace vs Qué se necesita */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
                     {/* Sección: Qué se hace */}
-                    <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                      <h4 className="text-xs font-bold text-[#0A1F3C] uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#0A1F3C]" />
+                    <div className="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200">
+                      <h4 className="text-[11px] font-bold text-[#0A1F3C] uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#0A1F3C]" />
                         ¿Qué se hace en este paso?
                       </h4>
-                      <ul className="bullet-list space-y-2.5">
+                      <ul className="bullet-list space-y-2">
                         {activeSubprocess.queSeHace.map((item, i) => (
-                          <li key={i} className="text-xs text-slate-700 leading-relaxed pl-4 relative font-normal">
+                          <li key={i} className="text-[11px] sm:text-xs text-slate-700 leading-relaxed pl-4 relative font-normal">
                             {item}
                           </li>
                         ))}
@@ -1351,14 +1351,14 @@ export default function App() {
                     </div>
 
                     {/* Sección: Qué se necesita */}
-                    <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                      <h4 className="text-xs font-bold text-[#0A1F3C] uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <FileText className="w-4 h-4 text-[#0A1F3C]" />
+                    <div className="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200">
+                      <h4 className="text-[11px] font-bold text-[#0A1F3C] uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                        <FileText className="w-3.5 h-3.5 text-[#0A1F3C]" />
                         Documentos y Requisitos necesarios
                       </h4>
-                      <ul className="bullet-list space-y-2.5">
+                      <ul className="bullet-list space-y-2">
                         {activeSubprocess.queSeNecesita.map((item, i) => (
-                          <li key={i} className="text-xs text-slate-700 leading-relaxed pl-4 relative font-normal">
+                          <li key={i} className="text-[11px] sm:text-xs text-slate-700 leading-relaxed pl-4 relative font-normal">
                             {item}
                           </li>
                         ))}
@@ -1367,11 +1367,11 @@ export default function App() {
                   </div>
 
                   {/* Cuadro de Criterio de Finalización */}
-                  <div className="finish-condition-box bg-[#F0F5FA] border border-slate-200 rounded-xl p-4">
-                    <span className="finish-label block font-mono text-[11px] font-bold text-[#0A1F3C] uppercase tracking-wider mb-1">
+                  <div className="finish-condition-box bg-[#F0F5FA] border border-slate-200 rounded-xl p-3.5">
+                    <span className="finish-label block font-mono text-[10px] font-bold text-[#0A1F3C] uppercase tracking-wider mb-0.5">
                       Criterio de finalización del paso
                     </span>
-                    <p className="finish-text text-xs text-slate-800 font-semibold leading-relaxed">
+                    <p className="finish-text text-[11px] sm:text-xs text-slate-800 font-semibold leading-relaxed">
                       {activeSubprocess.terminaCuando}
                     </p>
                   </div>
