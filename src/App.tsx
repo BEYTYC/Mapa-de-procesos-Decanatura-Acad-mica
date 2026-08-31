@@ -727,7 +727,7 @@ export default function App() {
                   <div className="flex flex-col xl:flex-row items-stretch justify-between gap-4 relative z-10 w-full">
                     
                     {/* BLOQUE DE ENTRADA (LADO IZQUIERDO) */}
-                    <div className="xl:w-[220px] shrink-0 bg-white border-2 border-slate-200 rounded-2xl p-5 flex flex-col justify-between shadow-md relative group hover:border-[#0A1F3C] transition-all">
+                    <div className="xl:w-[230px] shrink-0 bg-white border-2 border-slate-200 rounded-2xl p-6 min-h-[290px] flex flex-col justify-between shadow-md relative group hover:border-[#0A1F3C] transition-all">
                       <div>
                         <div className="flex items-center justify-between mb-3">
                           <span className="text-[10px] font-mono font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md uppercase tracking-wider">
@@ -788,7 +788,7 @@ export default function App() {
                               whileHover={{ y: -4, rotateX: 2 }}
                               whileTap={{ scale: 0.98 }}
                               className={cn(
-                                "process-box-card w-full text-left pt-12 pb-4 px-5 relative flex flex-col justify-between transition-all cursor-pointer outline-none group min-h-[180px] h-full overflow-hidden",
+                                "process-box-card w-full text-left pt-14 pb-5 px-6 relative flex flex-col justify-between transition-all cursor-pointer outline-none group min-h-[290px] h-full overflow-hidden",
                                 isOpening ? "is-opening border-[#0A1F3C] ring-2 ring-[#C6A15B]" : ""
                               )}
                             >
@@ -853,17 +853,17 @@ export default function App() {
                                   </span>
                                 </div>
 
-                                <h3 className="text-base sm:text-lg font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug mb-1.5">
+                                <h3 className="text-base sm:text-lg font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug mb-2">
                                   {proc.titulo}
                                 </h3>
 
-                                <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-2">
+                                <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-3">
                                   {proc.resumen}
                                 </p>
                               </div>
 
                               {/* Pie de la Caja - Botón de Apertura */}
-                              <div className="relative z-10 pt-2.5 mt-3 border-t border-slate-100 flex items-center justify-between">
+                              <div className="relative z-10 pt-3 mt-4 border-t border-slate-100 flex items-center justify-between">
                                 <span className="text-xs font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] flex items-center gap-1 transition-transform group-hover:translate-x-1 ml-auto">
                                   Abrir Caja <ChevronRight className="w-4 h-4 text-[#C6A15B]" />
                                 </span>
@@ -927,7 +927,7 @@ export default function App() {
                         <div className="relative flex flex-col w-full">
                           <button
                             onClick={() => setEditingProcessKey('new')}
-                            className="w-full h-full min-h-[180px] p-5 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white/70 hover:bg-white rounded-2xl flex flex-col items-center justify-center text-center transition-all cursor-pointer group shadow-xs hover:shadow-md"
+                            className="w-full h-full min-h-[290px] p-6 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white/70 hover:bg-white rounded-2xl flex flex-col items-center justify-center text-center transition-all cursor-pointer group shadow-xs hover:shadow-md"
                           >
                             <div className="p-3 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-md group-hover:scale-110 transition-transform mb-2">
                               <Plus className="w-6 h-6" />
@@ -944,7 +944,7 @@ export default function App() {
                     </div>
 
                     {/* BLOQUE DE SALIDA (LADO DERECHO) */}
-                    <div className="xl:w-[220px] shrink-0 bg-[#FEF8EC] border-2 border-[#C6A15B] rounded-2xl p-5 flex flex-col justify-between shadow-md relative group hover:shadow-xl transition-all">
+                    <div className="xl:w-[230px] shrink-0 bg-[#FEF8EC] border-2 border-[#C6A15B] rounded-2xl p-6 min-h-[290px] flex flex-col justify-between shadow-md relative group hover:shadow-xl transition-all">
                       <div className="hidden xl:flex absolute -left-5 top-1/2 -translate-y-1/2 z-30 pointer-events-none">
                         <div className="bg-[#0A1F3C] text-[#C6A15B] border-2 border-[#C6A15B] rounded-full p-1.5 shadow-lg">
                           <ArrowRight className="w-4 h-4 animate-pulse" />
@@ -1050,37 +1050,6 @@ export default function App() {
                   </p>
                 </div>
 
-                {/* Banner Destacado Especial para el Proceso de Graduación */}
-                {activeProcessKey === 'graduacion' && (
-                  <div className="w-full mb-6 bg-gradient-to-r from-[#0A1F3C] via-[#102A50] to-[#0A1F3C] text-white p-4 sm:p-5 rounded-2xl border-2 border-[#C6A15B] shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-12 h-12 rounded-xl bg-[#C6A15B]/20 border border-[#C6A15B] flex items-center justify-center shrink-0">
-                        <GraduationCap className="w-7 h-7 text-[#C6A15B]" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold tracking-widest text-[#C6A15B] bg-[#C6A15B]/10 px-2 py-0.5 rounded border border-[#C6A15B]/30 uppercase">
-                            Protocolo Oficial Apps Script & SNIES
-                          </span>
-                        </div>
-                        <h3 className="text-base sm:text-lg font-serif font-bold text-white mt-0.5">
-                          Portal de Solicitud de Titulación — ENAP
-                        </h3>
-                        <p className="text-xs text-slate-300 max-w-xl">
-                          Flujo oficial en 6 etapas: desde la solicitud del estudiante y aval de programa, hasta la <strong>emisión de diplomas por la Oficina de Estadística</strong> y su entrega solemne por Secretaría Académica.
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setIsProtocoloModalOpen(true)}
-                      className="px-4 py-2.5 bg-[#C6A15B] hover:bg-[#D8B46E] text-[#0A1F3C] text-xs font-extrabold rounded-xl shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
-                    >
-                      <BookOpen className="w-4 h-4" />
-                      <span>Consultar Guía & Catálogo Completo</span>
-                    </button>
-                  </div>
-                )}
-
                 {/* Grid de Subprocesos */}
                 <div className="w-full bg-white rounded-2xl border border-slate-200 p-5 md:p-6 shadow-xl relative overflow-hidden">
                   <div className="box-interior-floor p-4 md:p-5 rounded-xl relative overflow-visible">
@@ -1119,11 +1088,11 @@ export default function App() {
                           >
                             <button
                               onClick={() => openSubBox(activeProcessKey, idx)}
-                              className="flow-subcard text-left bg-white p-3.5 sm:p-4 flex flex-col justify-between cursor-pointer group shadow-xs hover:shadow-md transition-all relative border-2 border-slate-200 hover:border-[#0A1F3C] rounded-xl h-full min-h-[120px]"
+                              className="flow-subcard text-left bg-white p-5 sm:p-6 flex flex-col justify-between cursor-pointer group shadow-xs hover:shadow-md transition-all relative border-2 border-slate-200 hover:border-[#0A1F3C] rounded-2xl h-full min-h-[220px]"
                             >
                               <div>
-                                <div className="flex items-center justify-between mb-1.5">
-                                  <span className="font-mono text-[11px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="font-mono text-[11px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-md">
                                     Paso {sub.stepNum} ({sub.id})
                                   </span>
                                   <div className="flex items-center gap-1.5">
@@ -1147,12 +1116,16 @@ export default function App() {
                                   </div>
                                 </div>
 
-                                <h4 className="text-sm sm:text-base font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug my-1">
+                                <h4 className="text-base sm:text-lg font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug my-1.5">
                                   {sub.titulo}
                                 </h4>
+
+                                <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-2">
+                                  {sub.resumen}
+                                </p>
                               </div>
 
-                              <div className="pt-2 mt-2 border-t border-slate-100 text-xs font-semibold text-[#0A1F3C] flex items-center justify-between">
+                              <div className="pt-3 mt-2 border-t border-slate-100 text-xs font-semibold text-[#0A1F3C] flex items-center justify-between">
                                 <span className="text-[11px] text-slate-600 font-medium truncate max-w-[170px]" title={sub.responsable}>
                                   <span className="text-slate-400 font-bold">Resp:</span> {sub.responsable}
                                 </span>
@@ -1223,16 +1196,16 @@ export default function App() {
                         <div className="relative flex flex-col">
                           <button
                             onClick={() => setEditingSubprocess({ procKey: activeProcessKey, subIndex: 'new' })}
-                            className="w-full text-center p-4 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white hover:bg-amber-50/40 rounded-xl flex flex-col items-center justify-center transition-all cursor-pointer h-full min-h-[120px] group shadow-2xs"
+                            className="w-full text-center p-6 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white hover:bg-amber-50/40 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer h-full min-h-[220px] group shadow-2xs"
                           >
-                            <div className="p-2 bg-[#0A1F3C] text-[#C6A15B] rounded-lg shadow-xs group-hover:scale-110 transition-transform mb-1">
-                              <Plus className="w-4 h-4" />
+                            <div className="p-2.5 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-xs group-hover:scale-110 transition-transform mb-2">
+                              <Plus className="w-5 h-5" />
                             </div>
-                            <span className="font-mono text-xs font-bold text-[#0A1F3C]">
+                            <span className="font-mono text-xs font-black text-[#0A1F3C] uppercase tracking-wider">
                               + Agregar Nuevo Paso
                             </span>
-                            <span className="text-[10px] text-slate-500">
-                              Paso {activeProcess.subprocesos.length + 1}
+                            <span className="text-[11px] text-slate-500 mt-1">
+                              Insertar subproceso en el flujo
                             </span>
                           </button>
                         </div>
