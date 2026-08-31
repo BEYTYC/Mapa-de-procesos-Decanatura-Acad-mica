@@ -8,7 +8,7 @@ interface EditSubprocessModalProps {
   onClose: () => void;
   subProcessData?: SubProcess | null;
   stepCount: number;
-  onSave: (updatedSub: SubProcess, isNew: boolean) => void;
+  onSave: (updatedSub: SubProcess, isNew: boolean, targetStepNum?: number) => void;
   onDelete?: (subId: string) => void;
   isNew?: boolean;
 }
@@ -95,7 +95,7 @@ export const EditSubprocessModal: React.FC<EditSubprocessModalProps> = ({
       terminaCuando: terminaCuando.trim() || 'El paso se da por concluido.'
     };
 
-    onSave(updated, isNew);
+    onSave(updated, isNew, stepNum);
     onClose();
   };
 

@@ -39,6 +39,7 @@ import { EditGateModal } from './components/EditGateModal';
 import { EditProcessModal } from './components/EditProcessModal';
 import { EditSubprocessModal } from './components/EditSubprocessModal';
 import { EditHeaderModal } from './components/EditHeaderModal';
+import { ProtocoloTitulacionModal } from './components/ProtocoloTitulacionModal';
 
 // --- Fondo Institucional con Marca de Agua Protocolaria ---
 const ProtocolBackground: React.FC = () => (
@@ -65,6 +66,10 @@ export default function App() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.procesos && parsed.entrada && parsed.salida) {
+          // Auto-upgrade graduacion to have the official 7 stages from the Titulación portal script
+          if (parsed.procesos.graduacion) {
+            parsed.procesos.graduacion = INITIAL_APP_DATA.procesos.graduacion;
+          }
           return parsed;
         }
       }
@@ -84,6 +89,7 @@ export default function App() {
   });
   const [isEditMode, setIsEditMode] = useState<boolean>(true);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
+  const [isProtocoloModalOpen, setIsProtocoloModalOpen] = useState<boolean>(false);
 
   // Modals state
   const [editingGate, setEditingGate] = useState<'entrada' | 'salida' | null>(null);
@@ -213,17 +219,69 @@ export default function App() {
     setEditingGate(null);
   };
 
-  const handleSaveProcess = (procKey: string, updatedProc: Process) => {
+  const handleSaveProcess = (procKey: string, updatedProc: Process, targetPosition?: number) => {
     setAppData(prev => {
-      const nextProcesos = { ...prev.procesos };
-      if (editingProcessKey && editingProcessKey !== 'new' && editingProcessKey !== procKey) {
-        delete nextProcesos[editingProcessKey];
+      const keys = Object.keys(prev.procesos);
+      const isRename = editingProcessKey && editingProcessKey !== 'new' && editingProcessKey !== procKey;
+      const isNew = editingProcessKey === 'new' || !prev.procesos[procKey];
+
+      // Build ordered array of entries
+      let entries = keys
+        .filter(k => isRename ? k !== editingProcessKey : true)
+        .map(k => ({ key: k, proc: k === procKey ? updatedProc : prev.procesos[k] }));
+
+      if (isNew) {
+        const insertIdx = targetPosition ? Math.max(0, Math.min(targetPosition - 1, entries.length)) : entries.length;
+        entries.splice(insertIdx, 0, { key: procKey, proc: updatedProc });
+      } else {
+        const currentIdx = entries.findIndex(e => e.key === procKey);
+        if (currentIdx !== -1 && targetPosition !== undefined) {
+          const item = entries.splice(currentIdx, 1)[0];
+          item.proc = updatedProc;
+          const insertIdx = Math.max(0, Math.min(targetPosition - 1, entries.length));
+          entries.splice(insertIdx, 0, item);
+        } else if (currentIdx !== -1) {
+          entries[currentIdx].proc = updatedProc;
+        } else {
+          entries.push({ key: procKey, proc: updatedProc });
+        }
       }
-      nextProcesos[procKey] = updatedProc;
+
+      const nextProcesos: Record<string, Process> = {};
+      entries.forEach(e => {
+        nextProcesos[e.key] = e.proc;
+      });
+
       return { ...prev, procesos: nextProcesos };
     });
     setActiveProcessKey(procKey);
     setEditingProcessKey(null);
+  };
+
+  const handleMoveProcess = (procKey: string, direction: 'left' | 'right') => {
+    setAppData(prev => {
+      const keys = Object.keys(prev.procesos);
+      const currentIndex = keys.indexOf(procKey);
+      if (currentIndex === -1) return prev;
+
+      const targetIndex = direction === 'left' ? currentIndex - 1 : currentIndex + 1;
+      if (targetIndex < 0 || targetIndex >= keys.length) return prev;
+
+      const newKeys = [...keys];
+      const temp = newKeys[currentIndex];
+      newKeys[currentIndex] = newKeys[targetIndex];
+      newKeys[targetIndex] = temp;
+
+      const nextProcesos: Record<string, Process> = {};
+      newKeys.forEach(k => {
+        nextProcesos[k] = prev.procesos[k];
+      });
+
+      return {
+        ...prev,
+        procesos: nextProcesos
+      };
+    });
   };
 
   const handleDeleteProcess = (procKey: string) => {
@@ -240,7 +298,7 @@ export default function App() {
     setEditingProcessKey(null);
   };
 
-  const handleSaveSubprocess = (updatedSub: SubProcess, isNew: boolean) => {
+  const handleSaveSubprocess = (updatedSub: SubProcess, isNew: boolean, targetStepNum?: number) => {
     if (!editingSubprocess) return;
     const { procKey, subIndex } = editingSubprocess;
     setAppData(prev => {
@@ -249,9 +307,12 @@ export default function App() {
 
       let nextSubs = [...proc.subprocesos];
       if (isNew) {
-        nextSubs.push(updatedSub);
+        const insertIdx = targetStepNum ? Math.max(0, Math.min(targetStepNum - 1, nextSubs.length)) : nextSubs.length;
+        nextSubs.splice(insertIdx, 0, updatedSub);
       } else if (typeof subIndex === 'number' && nextSubs[subIndex]) {
-        nextSubs[subIndex] = updatedSub;
+        nextSubs.splice(subIndex, 1);
+        const insertIdx = targetStepNum ? Math.max(0, Math.min(targetStepNum - 1, nextSubs.length)) : subIndex;
+        nextSubs.splice(insertIdx, 0, updatedSub);
       }
 
       nextSubs = nextSubs.map((s, i) => ({ ...s, stepNum: i + 1 }));
@@ -268,6 +329,34 @@ export default function App() {
       };
     });
     setEditingSubprocess(null);
+  };
+
+  const handleMoveSubprocess = (procKey: string, subIndex: number, direction: 'left' | 'right') => {
+    setAppData(prev => {
+      const proc = prev.procesos[procKey];
+      if (!proc || !proc.subprocesos) return prev;
+
+      const targetIndex = direction === 'left' ? subIndex - 1 : subIndex + 1;
+      if (targetIndex < 0 || targetIndex >= proc.subprocesos.length) return prev;
+
+      const nextSubs = [...proc.subprocesos];
+      const temp = nextSubs[subIndex];
+      nextSubs[subIndex] = nextSubs[targetIndex];
+      nextSubs[targetIndex] = temp;
+
+      const reindexed = nextSubs.map((s, i) => ({ ...s, stepNum: i + 1 }));
+
+      return {
+        ...prev,
+        procesos: {
+          ...prev.procesos,
+          [procKey]: {
+            ...proc,
+            subprocesos: reindexed
+          }
+        }
+      };
+    });
   };
 
   const handleDeleteSubprocess = (subId: string) => {
@@ -431,9 +520,21 @@ export default function App() {
             )}
           </ul>
 
-          <div className="hidden sm:flex items-center gap-2 text-[11px] font-mono text-slate-500">
-            <span>Subir nivel:</span>
-            <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-700">ESC</kbd>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => setIsProtocoloModalOpen(true)}
+              className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-[#8A651E] border border-[#C6A15B]/50 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
+              title="Ver Catálogo de Programas, Documentos y Protocolo Oficial de Grados"
+            >
+              <GraduationCap className="w-3.5 h-3.5 text-[#C6A15B]" />
+              <span className="hidden sm:inline">Guía Portal de Titulación ENAP</span>
+              <span className="sm:hidden">Guía Titulación</span>
+            </button>
+
+            <div className="hidden sm:flex items-center gap-2 text-[11px] font-mono text-slate-500">
+              <span>Subir nivel:</span>
+              <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-700">ESC</kbd>
+            </div>
           </div>
         </nav>
       </div>
@@ -769,6 +870,37 @@ export default function App() {
                               </div>
                             </motion.button>
 
+                            {/* Controles de Reordenación de Proceso en Modo Edición */}
+                            {isAdmin && isEditMode && (
+                              <div className="flex items-center justify-between mt-2 px-3 py-1.5 bg-amber-50/90 border border-amber-200 rounded-xl shadow-2xs">
+                                <span className="text-[11px] font-mono font-bold text-slate-600">
+                                  Posición <strong className="text-[#0A1F3C]">{idx + 1}</strong> de {processKeys.length}
+                                </span>
+                                <div className="flex items-center gap-1.5">
+                                  <button
+                                    type="button"
+                                    disabled={idx === 0}
+                                    onClick={() => handleMoveProcess(key, 'left')}
+                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[11px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
+                                    title="Mover caja a la izquierda (antes)"
+                                  >
+                                    <ChevronLeft className="w-3.5 h-3.5" />
+                                    <span>Antes</span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    disabled={idx === processKeys.length - 1}
+                                    onClick={() => handleMoveProcess(key, 'right')}
+                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[11px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
+                                    title="Mover caja a la derecha (después)"
+                                  >
+                                    <span>Después</span>
+                                    <ChevronRight className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
                             {/* Flechas Conectoras entre Procesos */}
                             {!isLastProc && (
                               <>
@@ -918,6 +1050,37 @@ export default function App() {
                   </p>
                 </div>
 
+                {/* Banner Destacado Especial para el Proceso de Graduación */}
+                {activeProcessKey === 'graduacion' && (
+                  <div className="w-full mb-6 bg-gradient-to-r from-[#0A1F3C] via-[#102A50] to-[#0A1F3C] text-white p-4 sm:p-5 rounded-2xl border-2 border-[#C6A15B] shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-12 h-12 rounded-xl bg-[#C6A15B]/20 border border-[#C6A15B] flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-7 h-7 text-[#C6A15B]" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold tracking-widest text-[#C6A15B] bg-[#C6A15B]/10 px-2 py-0.5 rounded border border-[#C6A15B]/30 uppercase">
+                            Protocolo Oficial Apps Script & SNIES
+                          </span>
+                        </div>
+                        <h3 className="text-base sm:text-lg font-serif font-bold text-white mt-0.5">
+                          Portal de Solicitud de Titulación — ENAP
+                        </h3>
+                        <p className="text-xs text-slate-300 max-w-xl">
+                          Flujo oficial en 6 etapas: desde la solicitud del estudiante y aval de programa, hasta la <strong>emisión de diplomas por la Oficina de Estadística</strong> y su entrega solemne por Secretaría Académica.
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setIsProtocoloModalOpen(true)}
+                      className="px-4 py-2.5 bg-[#C6A15B] hover:bg-[#D8B46E] text-[#0A1F3C] text-xs font-extrabold rounded-xl shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span>Consultar Guía & Catálogo Completo</span>
+                    </button>
+                  </div>
+                )}
+
                 {/* Grid de Subprocesos */}
                 <div className="w-full bg-white rounded-2xl border border-slate-200 p-5 md:p-6 shadow-xl relative overflow-hidden">
                   <div className="box-interior-floor p-4 md:p-5 rounded-xl relative overflow-visible">
@@ -997,6 +1160,39 @@ export default function App() {
                                   Ver <ChevronRight className="w-3.5 h-3.5 text-[#C6A15B] group-hover:translate-x-0.5 transition-transform" />
                                 </span>
                               </div>
+
+                              {/* Reordenación de Subprocesos en Modo Admin */}
+                              {isAdmin && isEditMode && (
+                                <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-amber-200/70 bg-amber-50/60 px-2 py-1 rounded-md">
+                                  <span className="text-[10px] font-mono font-bold text-slate-500">Paso {sub.stepNum}/{activeProcess.subprocesos.length}</span>
+                                  <div className="flex items-center gap-1">
+                                    <button
+                                      type="button"
+                                      disabled={idx === 0}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleMoveSubprocess(activeProcessKey, idx, 'left');
+                                      }}
+                                      className="p-1 rounded bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 disabled:opacity-25 disabled:cursor-not-allowed text-[10px] font-bold flex items-center cursor-pointer shadow-2xs"
+                                      title="Mover paso a la izquierda (antes)"
+                                    >
+                                      <ChevronLeft className="w-3 h-3" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      disabled={idx === activeProcess.subprocesos.length - 1}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleMoveSubprocess(activeProcessKey, idx, 'right');
+                                      }}
+                                      className="p-1 rounded bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 disabled:opacity-25 disabled:cursor-not-allowed text-[10px] font-bold flex items-center cursor-pointer shadow-2xs"
+                                      title="Mover paso a la derecha (después)"
+                                    >
+                                      <ChevronRight className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                             </button>
 
                             {/* Conector Flecha entre subprocesos */}
@@ -1147,11 +1343,19 @@ export default function App() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl">
-                      <User className="w-4 h-4 text-[#0A1F3C]" />
-                      <div className="flex flex-col">
-                        <span className="text-[10px] font-mono font-bold text-slate-400 uppercase">Responsable</span>
-                        <span className="text-xs font-bold text-[#0A1F3C]">{activeSubprocess.responsable}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 bg-gradient-to-r from-[#0A1F3C]/5 via-[#C6A15B]/10 to-transparent border-2 border-[#C6A15B]/40 p-4 rounded-xl shadow-xs">
+                      <div className="w-10 h-10 rounded-xl bg-[#0A1F3C] text-[#C6A15B] flex items-center justify-center shrink-0 shadow-sm">
+                        <User className="w-5 h-5" />
+                      </div>
+                      <div className="flex flex-col flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2 py-0.5 rounded uppercase tracking-wider">
+                            Responsable Directo / Rol
+                          </span>
+                        </div>
+                        <span className="text-sm font-extrabold text-[#0A1F3C] mt-0.5">
+                          {activeSubprocess.responsable}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -1254,6 +1458,8 @@ export default function App() {
         isOpen={editingProcessKey !== null}
         onClose={() => setEditingProcessKey(null)}
         processData={editingProcessKey && editingProcessKey !== 'new' ? appData.procesos[editingProcessKey] : null}
+        currentPosition={editingProcessKey && editingProcessKey !== 'new' ? processKeys.indexOf(editingProcessKey) + 1 : processKeys.length + 1}
+        totalPositions={processKeys.length}
         onSave={handleSaveProcess}
         onDelete={handleDeleteProcess}
         isNew={editingProcessKey === 'new'}
@@ -1280,6 +1486,12 @@ export default function App() {
         onClose={() => setIsEditingHeader(false)}
         initialData={appData.headerNivel1}
         onSave={handleSaveHeader}
+      />
+
+      {/* MODAL DE PROTOCOLO Y CATÁLOGO DEL PORTAL DE TITULACIÓN ENAP */}
+      <ProtocoloTitulacionModal
+        isOpen={isProtocoloModalOpen}
+        onClose={() => setIsProtocoloModalOpen(false)}
       />
     </div>
   );

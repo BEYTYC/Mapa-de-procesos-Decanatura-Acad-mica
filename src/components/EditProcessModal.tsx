@@ -7,7 +7,9 @@ interface EditProcessModalProps {
   isOpen: boolean;
   onClose: () => void;
   processData?: Process | null;
-  onSave: (processKey: string, updatedProcess: Process) => void;
+  currentPosition?: number;
+  totalPositions?: number;
+  onSave: (processKey: string, updatedProcess: Process, targetPosition?: number) => void;
   onDelete?: (processKey: string) => void;
   isNew?: boolean;
 }
@@ -16,6 +18,8 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
   isOpen,
   onClose,
   processData,
+  currentPosition = 1,
+  totalPositions = 3,
   onSave,
   onDelete,
   isNew = false
@@ -27,6 +31,7 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
   const [descripcion, setDescripcion] = useState('');
   const [estado, setEstado] = useState<'borrador' | 'documentado'>('documentado');
   const [badgeText, setBadgeText] = useState('Proceso documentado');
+  const [selectedPosition, setSelectedPosition] = useState<number>(1);
 
   useEffect(() => {
     if (processData && !isNew) {
@@ -37,17 +42,19 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
       setDescripcion(processData.descripcion);
       setEstado(processData.estado);
       setBadgeText(processData.badgeText);
+      setSelectedPosition(currentPosition);
     } else if (isNew) {
       const randomId = `proc_${Date.now()}`;
       setKey(randomId);
-      setCodigo('PROC-NEW');
+      setCodigo(`PROC-0${totalPositions + 1}`);
       setTitulo('');
       setResumen('');
       setDescripcion('');
       setEstado('documentado');
       setBadgeText('Proceso documentado');
+      setSelectedPosition(totalPositions + 1);
     }
-  }, [processData, isNew, isOpen]);
+  }, [processData, isNew, isOpen, currentPosition, totalPositions]);
 
   if (!isOpen) return null;
 
@@ -81,7 +88,7 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
       ]
     };
 
-    onSave(finalKey, updatedProcess);
+    onSave(finalKey, updatedProcess, selectedPosition);
     onClose();
   };
 
@@ -194,7 +201,24 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block text-xs font-mono font-bold text-[#0A1F3C] uppercase mb-1">
+                  Posición / Orden
+                </label>
+                <select
+                  value={selectedPosition}
+                  onChange={(e) => setSelectedPosition(parseInt(e.target.value) || 1)}
+                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold text-[#0A1F3C] focus:outline-none focus:border-[#0A1F3C]"
+                >
+                  {Array.from({ length: isNew ? totalPositions + 1 : totalPositions }, (_, idx) => (
+                    <option key={idx + 1} value={idx + 1}>
+                      Posición {idx + 1} {idx === 0 ? '(Primero)' : idx === (isNew ? totalPositions : totalPositions - 1) ? '(Último)' : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div>
                 <label className="block text-xs font-mono font-bold text-[#0A1F3C] uppercase mb-1">
                   Estado Institucional
