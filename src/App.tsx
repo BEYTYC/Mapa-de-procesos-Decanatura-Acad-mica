@@ -44,17 +44,17 @@ import { ProtocoloTitulacionModal } from './components/ProtocoloTitulacionModal'
 // --- Fondo Institucional con Marca de Agua Protocolaria ---
 const ProtocolBackground: React.FC = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#F4F6F9]">
-    {/* Marca de agua central sutil del Escudo ENAP */}
-    <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] select-none">
+    {/* Fondo base con sutil degradado institucional */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.95)_0%,rgba(244,246,249,0.85)_55%,rgba(228,235,244,0.75)_100%)]" />
+
+    {/* Marca de agua central ENAP: grande y transparente como estaba antes */}
+    <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none">
       <img 
         src="https://i.ibb.co/p6wfvf20/logo.png" 
         alt="" 
-        className="w-[650px] h-[650px] md:w-[750px] md:h-[750px] object-contain filter text-[#0A1F3C]"
+        className="w-[850px] h-[850px] md:w-[1050px] md:h-[1050px] lg:w-[1300px] lg:h-[1300px] max-w-none object-contain opacity-[0.035] select-none"
       />
     </div>
-
-    {/* Resplandor radial de luz protocolo suave */}
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.92)_0%,rgba(244,246,249,0.75)_60%,rgba(230,235,242,0.5)_100%)]" />
   </div>
 );
 
@@ -388,6 +388,9 @@ export default function App() {
   // Determinar si debemos mostrar el sidebar (SÓLO en Nivel 2 y Nivel 3)
   const shouldShowSidebar = level >= 2 && isSidebarOpen;
 
+  // Si hay 6 o menos subprocesos, se ajusta para verse en una sola página sin scroll
+  const isSubprocessSinglePage = level === 2 && (activeProcess?.subprocesos?.length || 0) <= 6;
+
   return (
     <div className="h-screen w-screen text-[#0A1F3C] font-sans relative flex flex-col overflow-hidden bg-[#EEF4FA]">
       <ProtocolBackground />
@@ -395,34 +398,22 @@ export default function App() {
       {/* CONTENEDOR FIJO SUPERIOR: HEADER + ADMIN TOOLBAR + BREADCRUMBS */}
       <div className="shrink-0 z-40 flex flex-col bg-white shadow-xs">
         {/* CABECERA INSTITUCIONAL EN AZUL NAVY */}
-        <header className="h-[88px] bg-[#0A1F3C] px-4 lg:px-8 flex items-center justify-between shadow-md relative">
-          <div className="flex items-center gap-3 md:gap-4">
-            {/* Botón Toggle para Menú Lateral (Visible sólo si estamos en Nivel 2 o 3) */}
-            {level >= 2 && (
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="p-2 rounded-xl text-slate-200 hover:text-white hover:bg-white/10 transition-colors flex items-center gap-2 text-xs font-semibold mr-1 border border-white/10 cursor-pointer"
-                title="Alternar Menú Lateral"
-              >
-                {isSidebarOpen ? <X className="w-5 h-5 text-slate-300" /> : <Menu className="w-5 h-5 text-slate-300" />}
-                <span className="hidden sm:inline text-slate-200 text-xs font-mono">Menú</span>
-              </button>
-            )}
-
-            {/* Logo / Escudo ENAP sutil, un poco más pequeño */}
+        <header className="h-[76px] sm:h-[80px] bg-[#0A1F3C] px-4 lg:px-8 flex items-center justify-between shadow-md relative">
+          <div className="flex items-center gap-2 sm:gap-2.5 pl-4 sm:pl-8 lg:pl-14">
+            {/* Logo / Escudo ENAP un tris más grande y destacado */}
             <div className="relative flex items-center justify-center shrink-0">
               <img 
                 id="escudo"
                 src="https://i.ibb.co/p6wfvf20/logo.png" 
                 alt="Escudo ENAP" 
-                className="h-[42px] md:h-[48px] w-auto object-contain enap-logo-glow select-none"
+                className="h-[48px] md:h-[55px] w-auto object-contain enap-logo-glow select-none"
                 onError={(e) => {
                   (e.target as HTMLElement).style.display = 'none';
                 }}
               />
             </div>
 
-            {/* Jerarquía Institucional ENAP */}
+            {/* Jerarquía Institucional ENAP - pegada armoniosamente al logo */}
             <div className="flex flex-col justify-center">
               <h1 className="text-white font-bold text-xs sm:text-sm md:text-base tracking-tight leading-tight">
                 Escuela Naval de Cadetes "Almirante Padilla"
@@ -491,6 +482,25 @@ export default function App() {
           shouldShowSidebar ? "lg:pl-[310px]" : "pl-4 lg:pl-8"
         )}>
           <ul className="flex items-center gap-2 list-none">
+            {/* Botón de Índice / Menú lateral cuando estamos en Nivel 2 o 3 */}
+            {level >= 2 && (
+              <li>
+                <button
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                  className={cn(
+                    "px-2.5 py-1 rounded-md transition-colors flex items-center gap-1.5 font-bold cursor-pointer border text-xs mr-1 shadow-2xs",
+                    isSidebarOpen 
+                      ? "bg-[#0A1F3C] text-[#C6A15B] border-[#0A1F3C]" 
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-100"
+                  )}
+                  title="Mostrar / Ocultar Índice lateral de procesos"
+                >
+                  <Menu className="w-3.5 h-3.5" />
+                  <span>Índice</span>
+                </button>
+              </li>
+            )}
+
             <li>
               <button 
                 onClick={() => setLevel(1)} 
@@ -674,9 +684,21 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* CONTENIDO PRINCIPAL CON SCROLL VERTICAL INTERNO */}
-      <main className="flex-1 h-full overflow-y-auto overflow-x-hidden px-4 lg:px-8 py-6 relative z-10 custom-scrollbar">
-        <div className="max-w-7xl mx-auto pb-12">
+      {/* CONTENIDO PRINCIPAL: CENTRADO VERTICAL Y HORIZONTALMENTE EN PANTALLA */}
+      <main className={cn(
+        "flex-1 h-full overflow-x-hidden relative z-10 custom-scrollbar px-3 sm:px-6 lg:px-8 flex flex-col justify-center items-center",
+        level === 1 
+          ? "overflow-y-auto xl:overflow-y-hidden py-2" 
+          : isSubprocessSinglePage
+            ? "overflow-y-auto lg:overflow-y-hidden py-2"
+            : "overflow-y-auto py-5 justify-start"
+      )}>
+        <div className={cn(
+          "max-w-[1380px] 2xl:max-w-[1440px] mx-auto w-full flex flex-col items-center",
+          (level === 1 || isSubprocessSinglePage)
+            ? "flex-1 justify-center my-auto" 
+            : "pb-12"
+        )}>
           <AnimatePresence mode="wait">
 
             {/* ==========================================
@@ -689,19 +711,19 @@ export default function App() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.3 }}
-                className="w-full flex flex-col items-center"
+                className="w-full flex flex-col items-center justify-center my-auto"
               >
                 {/* Encabezado Nivel 1 */}
-                <div className="text-center mb-6 relative">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="font-mono text-xs font-bold text-[#0A1F3C] uppercase tracking-widest bg-white px-3.5 py-1 rounded-full border border-slate-200 shadow-xs inline-flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#C6A15B]" />
+                <div className="text-center mb-3 sm:mb-3.5 relative shrink-0">
+                  <div className="flex items-center justify-center gap-2 mb-1.5">
+                    <span className="font-mono text-[11px] font-bold text-[#0A1F3C] uppercase tracking-widest bg-white px-3 py-0.5 rounded-full border border-slate-200 shadow-xs inline-flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-[#C6A15B]" />
                       {appData.headerNivel1.badge.replace(/Nivel \d+\s*[-—–:]*\s*/gi, '')}
                     </span>
                     {isAdmin && isEditMode && (
                       <button
                         onClick={() => setIsEditingHeader(true)}
-                        className="px-2.5 py-1 text-xs font-bold text-[#0A1F3C] bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-full transition-colors cursor-pointer flex items-center gap-1 shadow-2xs"
+                        className="px-2 py-0.5 text-[11px] font-bold text-[#0A1F3C] bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-full transition-colors cursor-pointer flex items-center gap-1 shadow-2xs"
                         title="Editar textos del encabezado"
                       >
                         <Edit3 className="w-3 h-3 text-[#8A651E]" />
@@ -709,23 +731,23 @@ export default function App() {
                       </button>
                     )}
                   </div>
-                  <h2 className="text-2xl lg:text-3xl font-extrabold text-[#0A1F3C] tracking-tight mb-1.5">
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#0A1F3C] tracking-tight mb-1">
                     {appData.headerNivel1.titulo}
                   </h2>
-                  <p className="text-xs sm:text-[13px] text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-xs sm:text-[12.5px] text-slate-600 max-w-2xl mx-auto leading-snug">
                     {appData.headerNivel1.descripcion}
                   </p>
                 </div>
 
                 {/* SECUENCIA HORIZONTAL: ENTRADA ➔ PROCESOS ➔ SALIDA */}
-                <div className="w-full box-perspective-container pt-2">
-                  <div className="flex flex-col xl:flex-row items-stretch justify-between gap-4 relative z-10 w-full">
+                <div className="w-full box-perspective-container pt-1">
+                  <div className="flex flex-col xl:flex-row items-stretch justify-between gap-3.5 lg:gap-4 relative z-10 w-full">
                     
-                    {/* BLOQUE DE ENTRADA (LADO IZQUIERDO) */}
-                    <div className="xl:w-[230px] shrink-0 bg-white border-2 border-slate-200 rounded-2xl p-5 min-h-[280px] flex flex-col justify-between shadow-md relative group hover:border-[#0A1F3C] transition-all">
+                    {/* BLOQUE DE ENTRADA (LADO IZQUIERDO) - MÁS GRANDE */}
+                    <div className="xl:w-[245px] 2xl:w-[265px] shrink-0 bg-white border-2 border-slate-200 rounded-2xl p-4 sm:p-5 min-h-[250px] lg:min-h-[275px] xl:min-h-[295px] flex flex-col justify-between shadow-md relative group hover:border-[#0A1F3C] transition-all">
                       <div>
                         <div className="flex items-center justify-between mb-2.5">
-                          <span className="text-[9px] font-mono font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                          <span className="text-[10px] font-mono font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                             {appData.entrada.tag}
                           </span>
                           <div className="flex items-center gap-1.5">
@@ -740,21 +762,21 @@ export default function App() {
                                 <span>Editar</span>
                               </button>
                             )}
-                            <User className="w-4 h-4 text-[#0A1F3C]" />
+                            <User className="w-4.5 h-4.5 text-[#0A1F3C]" />
                           </div>
                         </div>
-                        <h3 className="text-base font-extrabold text-[#0A1F3C] mb-1 leading-tight">
+                        <h3 className="text-base sm:text-[17px] font-extrabold text-[#0A1F3C] mb-1 leading-tight">
                           {appData.entrada.titulo}
                         </h3>
-                        <p className="text-[11px] font-bold text-[#C6A15B] uppercase tracking-wider mb-1.5">
+                        <p className="text-[11px] sm:text-xs font-bold text-[#C6A15B] uppercase tracking-wider mb-1.5">
                           {appData.entrada.subtitulo}
                         </p>
-                        <p className="text-[11px] text-slate-600 leading-relaxed">
+                        <p className="text-xs sm:text-[12.5px] text-slate-600 leading-relaxed">
                           {appData.entrada.descripcion}
                         </p>
                       </div>
 
-                      <div className="pt-2.5 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500">
+                      <div className="pt-2.5 mt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500">
                         <span>{appData.entrada.pie}</span>
                         <ArrowRight className="w-4 h-4 text-[#C6A15B] animate-pulse hidden xl:block" />
                         <ArrowDown className="w-4 h-4 text-[#C6A15B] animate-pulse xl:hidden" />
@@ -768,8 +790,8 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* TARJETAS DE PROCESOS (CENTRO) - CAJAS 3D CON TAPA */}
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 relative box-perspective-container">
+                    {/* TARJETAS DE PROCESOS (CENTRO) - CAJAS 3D MÁS GRANDES */}
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-4.5 relative box-perspective-container">
                       {processKeys.map((key, idx) => {
                         const proc = appData.procesos[key];
                         const isOpening = openingKey === key;
@@ -777,19 +799,19 @@ export default function App() {
 
                         return (
                           <div key={key} className="relative flex flex-col w-full">
-                            {/* CAJA 3D DE PROCESO COMPACTA CON TAPA SUPERIOR */}
+                            {/* CAJA 3D DE PROCESO CON DIMENSIONES AMPLIADAS */}
                             <motion.button
                               onClick={() => openProcessBox(key)}
                               whileHover={{ y: -4, rotateX: 2 }}
                               whileTap={{ scale: 0.98 }}
                               className={cn(
-                                "process-box-card w-full text-left pt-14 pb-4 px-5 relative flex flex-col justify-between transition-all cursor-pointer outline-none group min-h-[280px] h-full overflow-hidden",
+                                "process-box-card w-full text-left pt-12 sm:pt-13 pb-3.5 sm:pb-4 px-4 sm:px-5 relative flex flex-col justify-between transition-all cursor-pointer outline-none group min-h-[250px] lg:min-h-[275px] xl:min-h-[295px] h-full overflow-hidden",
                                 isOpening ? "is-opening border-[#0A1F3C] ring-2 ring-[#C6A15B]" : ""
                               )}
                             >
                               {/* TAPA SUPERIOR FÍSICA DEL PROCESO */}
                               <div className="process-box-lid flex items-center justify-between">
-                                <span className="font-mono text-[10px] font-extrabold text-[#C6A15B] tracking-wider uppercase flex items-center gap-1.5">
+                                <span className="font-mono text-[9px] sm:text-[10px] font-extrabold text-[#C6A15B] tracking-wider uppercase flex items-center gap-1.5">
                                   <Box className="w-3.5 h-3.5 text-[#C6A15B]" />
                                   PROCESO ACADÉMICO
                                 </span>
@@ -839,35 +861,35 @@ export default function App() {
 
                               {/* CUERPO PRINCIPAL DEL PROCESO */}
                               <div className="flex flex-col relative z-10 w-full mt-1">
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="font-mono text-[9px] font-bold text-slate-500 uppercase tracking-wide">
+                                <div className="flex items-center justify-between mb-1.5">
+                                  <span className="font-mono text-[9.5px] font-bold text-slate-500 uppercase tracking-wide">
                                     Contenido Interno:
                                   </span>
-                                  <span className="font-mono text-[10px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
+                                  <span className="font-mono text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
                                     {proc.subprocesos?.length || 0} Subprocesos
                                   </span>
                                 </div>
 
-                                <h3 className="text-sm sm:text-base font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug mb-1.5">
+                                <h3 className="text-base sm:text-[17px] font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug mb-1.5">
                                   {proc.titulo}
                                 </h3>
 
-                                <p className="text-[11px] text-slate-600 font-medium leading-relaxed line-clamp-3">
+                                <p className="text-xs sm:text-[12.5px] text-slate-600 font-medium leading-relaxed line-clamp-4">
                                   {proc.resumen}
                                 </p>
                               </div>
 
                               {/* Pie del Proceso - Botón de Apertura */}
-                              <div className="relative z-10 pt-2.5 mt-3 border-t border-slate-100 flex items-center justify-between">
-                                <span className="text-[11px] font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] flex items-center gap-1 transition-transform group-hover:translate-x-1 ml-auto">
-                                  Abrir proceso <ChevronRight className="w-3.5 h-3.5 text-[#C6A15B]" />
+                              <div className="relative z-10 pt-2.5 mt-2 border-t border-slate-100 flex items-center justify-between">
+                                <span className="text-[11px] sm:text-xs font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] flex items-center gap-1 transition-transform group-hover:translate-x-1 ml-auto">
+                                  Abrir proceso <ChevronRight className="w-4 h-4 text-[#C6A15B]" />
                                 </span>
                               </div>
                             </motion.button>
 
                             {/* Controles de Reordenación de Proceso en Modo Edición */}
                             {isAdmin && isEditMode && (
-                              <div className="flex items-center justify-between mt-2 px-3 py-1.5 bg-amber-50/90 border border-amber-200 rounded-xl shadow-2xs">
+                              <div className="flex items-center justify-between mt-2 px-3 py-1 bg-amber-50/90 border border-amber-200 rounded-xl shadow-2xs">
                                 <span className="text-[10px] font-mono font-bold text-slate-600">
                                   Posición <strong className="text-[#0A1F3C]">{idx + 1}</strong> de {processKeys.length}
                                 </span>
@@ -876,7 +898,7 @@ export default function App() {
                                     type="button"
                                     disabled={idx === 0}
                                     onClick={() => handleMoveProcess(key, 'left')}
-                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
+                                    className="px-2 py-0.5 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
                                     title="Mover proceso a la izquierda (antes)"
                                   >
                                     <ChevronLeft className="w-3 h-3" />
@@ -886,7 +908,7 @@ export default function App() {
                                     type="button"
                                     disabled={idx === processKeys.length - 1}
                                     onClick={() => handleMoveProcess(key, 'right')}
-                                    className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
+                                    className="px-2 py-0.5 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
                                     title="Mover proceso a la derecha (después)"
                                   >
                                     <span>Después</span>
@@ -922,7 +944,7 @@ export default function App() {
                         <div className="relative flex flex-col w-full">
                           <button
                             onClick={() => setEditingProcessKey('new')}
-                            className="w-full h-full min-h-[280px] p-5 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white/70 hover:bg-white rounded-2xl flex flex-col items-center justify-center text-center transition-all cursor-pointer group shadow-xs hover:shadow-md"
+                            className="w-full h-full min-h-[250px] lg:min-h-[275px] xl:min-h-[295px] p-4 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white/70 hover:bg-white rounded-2xl flex flex-col items-center justify-center text-center transition-all cursor-pointer group shadow-xs hover:shadow-md"
                           >
                             <div className="p-2.5 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-md group-hover:scale-110 transition-transform mb-2">
                               <Plus className="w-5 h-5" />
@@ -930,7 +952,7 @@ export default function App() {
                             <span className="font-mono text-[11px] font-black text-[#0A1F3C] uppercase tracking-wider">
                               + Agregar Nuevo Proceso
                             </span>
-                            <span className="text-[10px] text-slate-500 mt-1">
+                            <span className="text-[10px] text-slate-500 mt-0.5">
                               Crear nuevo proceso en el flujo
                             </span>
                           </button>
@@ -938,8 +960,8 @@ export default function App() {
                       )}
                     </div>
 
-                    {/* BLOQUE DE SALIDA (LADO DERECHO) */}
-                    <div className="xl:w-[230px] shrink-0 bg-[#FEF8EC] border-2 border-[#C6A15B] rounded-2xl p-5 min-h-[280px] flex flex-col justify-between shadow-md relative group hover:shadow-xl transition-all">
+                    {/* BLOQUE DE SALIDA (LADO DERECHO) - MÁS GRANDE */}
+                    <div className="xl:w-[245px] 2xl:w-[265px] shrink-0 bg-[#FEF8EC] border-2 border-[#C6A15B] rounded-2xl p-4 sm:p-5 min-h-[250px] lg:min-h-[275px] xl:min-h-[295px] flex flex-col justify-between shadow-md relative group hover:shadow-xl transition-all">
                       <div className="hidden xl:flex absolute -left-5 top-1/2 -translate-y-1/2 z-30 pointer-events-none">
                         <div className="bg-[#0A1F3C] text-[#C6A15B] border-2 border-[#C6A15B] rounded-full p-1.5 shadow-lg">
                           <ArrowRight className="w-4 h-4 animate-pulse" />
@@ -948,7 +970,7 @@ export default function App() {
 
                       <div>
                         <div className="flex items-center justify-between mb-2.5">
-                          <span className="text-[9px] font-mono font-extrabold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                          <span className="text-[10px] font-mono font-extrabold text-[#8A651E] bg-[#C6A15B]/20 border border-[#C6A15B]/40 px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                             {appData.salida.tag}
                           </span>
                           <div className="flex items-center gap-1.5">
@@ -963,23 +985,23 @@ export default function App() {
                                 <span>Editar</span>
                               </button>
                             )}
-                            <GraduationCap className="w-4 h-4 text-[#8A651E]" />
+                            <GraduationCap className="w-4.5 h-4.5 text-[#8A651E]" />
                           </div>
                         </div>
-                        <h3 className="text-base font-extrabold text-[#0A1F3C] mb-1 leading-tight">
+                        <h3 className="text-base sm:text-[17px] font-extrabold text-[#0A1F3C] mb-1 leading-tight">
                           {appData.salida.titulo}
                         </h3>
-                        <p className="text-[11px] font-bold text-[#8A651E] uppercase tracking-wider mb-1.5">
+                        <p className="text-[11px] sm:text-xs font-bold text-[#8A651E] uppercase tracking-wider mb-1.5">
                           {appData.salida.subtitulo}
                         </p>
-                        <p className="text-[11px] text-slate-700 leading-relaxed">
+                        <p className="text-xs sm:text-[12.5px] text-slate-700 leading-relaxed">
                           {appData.salida.descripcion}
                         </p>
                       </div>
 
-                      <div className="pt-2.5 mt-3 border-t border-[#C6A15B]/30 flex items-center justify-between text-[11px] font-mono font-bold text-[#8A651E]">
+                      <div className="pt-2.5 mt-2 border-t border-[#C6A15B]/30 flex items-center justify-between text-[11px] font-mono font-bold text-[#8A651E]">
                         <span>{appData.salida.pie}</span>
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#8A651E]" />
+                        <CheckCircle2 className="w-4 h-4 text-[#8A651E]" />
                       </div>
                     </div>
 
@@ -998,18 +1020,24 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.35 }}
-                className="w-full flex flex-col items-center"
+                className="w-full flex flex-col items-center justify-center my-auto"
               >
                 {/* Encabezado del Proceso */}
-                <div className="text-center mb-6 relative flex flex-col items-center justify-center">
-                  <div className="flex items-center gap-3">
-                    <h2 className="text-2xl lg:text-3xl font-extrabold text-[#0A1F3C] tracking-tight">
+                <div className={cn(
+                  "text-center relative flex flex-col items-center justify-center shrink-0",
+                  isSubprocessSinglePage ? "mb-2 sm:mb-3" : "mb-5"
+                )}>
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <h2 className={cn(
+                      "font-extrabold text-[#0A1F3C] tracking-tight",
+                      isSubprocessSinglePage ? "text-xl sm:text-2xl" : "text-2xl lg:text-3xl"
+                    )}>
                       {activeProcess.titulo}
                     </h2>
                     {isAdmin && isEditMode && (
                       <button
                         onClick={() => setEditingProcessKey(activeProcessKey)}
-                        className="px-2.5 py-1 text-xs font-bold text-[#0A1F3C] bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-full transition-colors cursor-pointer flex items-center gap-1 shadow-2xs"
+                        className="px-2 py-0.5 text-[11px] font-bold text-[#0A1F3C] bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-full transition-colors cursor-pointer flex items-center gap-1 shadow-2xs"
                         title="Editar título y definición del proceso"
                       >
                         <Edit3 className="w-3 h-3 text-[#8A651E]" />
@@ -1019,28 +1047,36 @@ export default function App() {
                   </div>
                   {/* Definición corta del proceso debajo del título */}
                   {activeProcess.resumen && (
-                    <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed mt-1.5 font-normal text-center">
+                    <p className={cn(
+                      "text-slate-600 max-w-2xl mx-auto leading-snug font-normal text-center",
+                      isSubprocessSinglePage ? "text-xs sm:text-[12.5px] mt-0.5 line-clamp-2" : "text-xs sm:text-sm mt-1.5"
+                    )}>
                       {activeProcess.resumen}
                     </p>
                   )}
                 </div>
 
-                {/* Grid de Subprocesos (sin el recuadro contenedor exterior) */}
-                <div className="w-full relative">
+                {/* Grid de Subprocesos centrado */}
+                <div className="w-full relative flex justify-center items-center">
                   <motion.div 
                     variants={{
                       hidden: { opacity: 0 },
                       show: {
                         opacity: 1,
                         transition: {
-                          staggerChildren: 0.08,
-                          delayChildren: 0.05
+                          staggerChildren: 0.06,
+                          delayChildren: 0.03
                         }
                       }
                     }}
                     initial="hidden"
                     animate="show"
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 relative z-10 box-perspective-container"
+                    className={cn(
+                      "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 relative z-10 box-perspective-container w-full max-w-6xl justify-center",
+                      isSubprocessSinglePage 
+                        ? "gap-y-2.5 sm:gap-y-3.5 gap-x-5 lg:gap-x-6" 
+                        : "gap-y-6 gap-x-8"
+                    )}
                   >
                       {activeProcess.subprocesos.map((sub, idx) => {
                         const isLast = idx === activeProcess.subprocesos.length - 1;
@@ -1050,53 +1086,59 @@ export default function App() {
                           <motion.div 
                             key={sub.id} 
                             variants={{
-                              hidden: { y: -20, opacity: 0, scale: 0.96 },
+                              hidden: { y: -15, opacity: 0, scale: 0.96 },
                               show: { 
                                 y: 0, 
                                 opacity: 1, 
                                 scale: 1, 
-                                transition: { type: "spring", stiffness: 300, damping: 22 }
+                                transition: { type: "spring", stiffness: 320, damping: 24 }
                               }
                             }}
                             className="relative flex flex-col"
                           >
                             <button
                               onClick={() => openSubBox(activeProcessKey, idx)}
-                              className="flow-subcard text-left bg-white p-4 sm:p-5 flex flex-col justify-between cursor-pointer group shadow-xs hover:shadow-md transition-all relative border-2 border-slate-200 hover:border-[#0A1F3C] rounded-2xl h-full min-h-[200px]"
+                              className={cn(
+                                "flow-subcard text-left bg-white flex flex-col justify-between cursor-pointer group shadow-xs hover:shadow-md transition-all relative border-2 border-slate-200 hover:border-[#0A1F3C] rounded-2xl h-full",
+                                isSubprocessSinglePage 
+                                  ? "p-3.5 sm:p-4 min-h-[165px] sm:min-h-[175px] lg:min-h-[185px]" 
+                                  : "p-4 sm:p-5 min-h-[220px] sm:min-h-[235px]"
+                              )}
                             >
                               <div>
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="font-mono text-[11px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-md">
-                                    {sub.id}
-                                  </span>
-                                  <div className="flex items-center gap-1.5">
-                                    {isAdmin && isEditMode && (
-                                      <button
-                                        type="button"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          setEditingSubprocess({ procKey: activeProcessKey, subIndex: idx });
-                                        }}
-                                        className="px-1.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[9px] font-bold flex items-center gap-0.5 shadow-2xs transition-colors cursor-pointer"
-                                        title="Editar este subproceso"
-                                      >
-                                        <Edit3 className="w-2.5 h-2.5 text-[#8A651E]" />
-                                        <span>Editar</span>
-                                      </button>
-                                    )}
+                                {isAdmin && isEditMode && (
+                                  <div className="flex items-center justify-end mb-1">
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setEditingSubprocess({ procKey: activeProcessKey, subIndex: idx });
+                                      }}
+                                      className="px-1.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[9px] font-bold flex items-center gap-0.5 shadow-2xs transition-colors cursor-pointer"
+                                      title="Editar este subproceso"
+                                    >
+                                      <Edit3 className="w-2.5 h-2.5 text-[#8A651E]" />
+                                      <span>Editar</span>
+                                    </button>
                                   </div>
-                                </div>
+                                )}
 
-                                <h4 className="text-sm sm:text-base font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug my-1">
+                                <h4 className={cn(
+                                  "font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] transition-colors leading-snug my-0.5",
+                                  isSubprocessSinglePage ? "text-xs sm:text-[13.5px]" : "text-sm sm:text-base my-1"
+                                )}>
                                   {sub.titulo}
                                 </h4>
 
-                                <p className="text-[11px] text-slate-600 leading-relaxed line-clamp-3 mb-2">
+                                <p className={cn(
+                                  "text-[11px] sm:text-[11.5px] text-slate-600 leading-relaxed",
+                                  isSubprocessSinglePage ? "line-clamp-3 mb-1.5" : "line-clamp-4 mb-2"
+                                )}>
                                   {sub.resumen}
                                 </p>
                               </div>
 
-                              <div className="pt-2.5 mt-2 border-t border-slate-100 text-xs font-semibold text-[#0A1F3C] flex items-center justify-between">
+                              <div className="pt-2 mt-1 border-t border-slate-100 text-xs font-semibold text-[#0A1F3C] flex items-center justify-between">
                                 <span className="text-[10px] text-slate-600 font-medium truncate max-w-[170px]" title={sub.responsable}>
                                   <span className="text-slate-400 font-bold">Resp:</span> {sub.responsable}
                                 </span>
@@ -1107,7 +1149,7 @@ export default function App() {
 
                               {/* Reordenación de Subprocesos en Modo Admin */}
                               {isAdmin && isEditMode && (
-                                <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-amber-200/70 bg-amber-50/60 px-2 py-1 rounded-md">
+                                <div className="flex items-center justify-between mt-1.5 pt-1.5 border-t border-amber-200/70 bg-amber-50/60 px-2 py-0.5 rounded-md">
                                   <span className="text-[9px] font-mono font-bold text-slate-500">Paso {sub.stepNum}/{activeProcess.subprocesos.length}</span>
                                   <div className="flex items-center gap-1">
                                     <button
@@ -1141,20 +1183,18 @@ export default function App() {
 
                             {/* Conector Flecha entre subprocesos */}
                             {!isLast && (
-                              <div className="hidden lg:flex absolute -right-6 top-1/2 -translate-y-1/2 z-30 pointer-events-none items-center justify-center">
-                                <div className="bg-[#0A1F3C] text-[#C6A15B] border-2 border-[#C6A15B] rounded-full p-1.5 shadow-md flex items-center justify-center">
-                                  <ArrowRight className="w-4 h-4 text-[#C6A15B] stroke-[2.5]" />
+                              <div className="hidden lg:flex absolute -right-5 top-1/2 -translate-y-1/2 z-30 pointer-events-none items-center justify-center">
+                                <div className="bg-[#0A1F3C] text-[#C6A15B] border border-[#C6A15B] rounded-full p-1 shadow-xs flex items-center justify-center">
+                                  <ArrowRight className="w-3.5 h-3.5 text-[#C6A15B] stroke-[2.5]" />
                                 </div>
                               </div>
                             )}
 
                             {!isLast && (
-                              <div className="flex lg:hidden justify-center my-1.5 z-20">
-                                <div className="bg-[#0A1F3C] text-[#C6A15B] border border-[#C6A15B] px-3 py-1 rounded-full shadow-xs flex items-center gap-1.5 text-[11px] font-mono font-bold">
-                                  <span>{sub.id}</span>
+                              <div className="flex lg:hidden justify-center my-1 z-20">
+                                <div className="bg-[#0A1F3C] text-[#C6A15B] border border-[#C6A15B] px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1.5 text-[10px] font-mono font-bold">
                                   <ArrowRight className="w-3.5 h-3.5 text-[#C6A15B] sm:inline hidden" />
                                   <ArrowDown className="w-3.5 h-3.5 text-[#C6A15B] sm:hidden" />
-                                  <span className="text-white">{nextSub?.id}</span>
                                 </div>
                               </div>
                             )}
@@ -1167,15 +1207,20 @@ export default function App() {
                         <div className="relative flex flex-col">
                           <button
                             onClick={() => setEditingSubprocess({ procKey: activeProcessKey, subIndex: 'new' })}
-                            className="w-full text-center p-6 border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white hover:bg-amber-50/40 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer h-full min-h-[220px] group shadow-2xs"
+                            className={cn(
+                              "w-full text-center border-2 border-dashed border-[#C6A15B] hover:border-[#0A1F3C] bg-white hover:bg-amber-50/40 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer h-full group shadow-2xs",
+                              isSubprocessSinglePage 
+                                ? "p-3.5 min-h-[165px] sm:min-h-[175px] lg:min-h-[185px]" 
+                                : "p-6 min-h-[220px] sm:min-h-[235px]"
+                            )}
                           >
-                            <div className="p-2.5 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-xs group-hover:scale-110 transition-transform mb-2">
-                              <Plus className="w-5 h-5" />
+                            <div className="p-2 bg-[#0A1F3C] text-[#C6A15B] rounded-xl shadow-xs group-hover:scale-110 transition-transform mb-1.5">
+                              <Plus className="w-4 h-4" />
                             </div>
                             <span className="font-mono text-xs font-black text-[#0A1F3C] uppercase tracking-wider">
                               + Agregar Nuevo Paso
                             </span>
-                            <span className="text-[11px] text-slate-500 mt-1">
+                            <span className="text-[10px] text-slate-500 mt-0.5">
                               Insertar subproceso en el flujo
                             </span>
                           </button>
@@ -1353,34 +1398,34 @@ export default function App() {
     </div>
 
     {/* FRANJA AZUL INFERIOR INSTITUCIONAL FIJA (HORIZONTAL EN LA BASE DE LA PANTALLA) */}
-    <footer className="w-full shrink-0 bg-[#0A1F3C] border-t-[3.5px] border-[#C6A15B] py-2 sm:py-2.5 px-4 sm:px-8 lg:px-12 shadow-2xl z-40 text-white flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
-      {/* Lado Izquierdo: Escudo institucional y jerarquía en dos líneas */}
-      <div className="flex items-center gap-3.5">
+    <footer className="w-full shrink-0 bg-[#0A1F3C] border-t-[3px] border-[#C6A15B] py-3 sm:py-3.5 min-h-[58px] sm:min-h-[62px] px-4 sm:px-8 lg:px-12 shadow-2xl z-40 text-white flex flex-col sm:flex-row items-center justify-between gap-2">
+      {/* Lado Izquierdo: Escudo institucional y jerarquía en dos líneas con letra más pequeña */}
+      <div className="flex items-center gap-3">
         <img 
           src="https://i.ibb.co/p6wfvf20/logo.png" 
           alt="Escudo ENAP" 
-          className="h-11 sm:h-[53px] w-auto object-contain enap-logo-glow select-none shrink-0"
+          className="h-8 sm:h-9 w-auto object-contain enap-logo-glow select-none shrink-0"
           onError={(e) => {
             (e.target as HTMLElement).style.display = 'none';
           }}
         />
-        <div className="flex flex-col justify-center leading-tight">
-          <span className="text-white font-bold text-xs sm:text-sm tracking-tight">
+        <div className="flex flex-col justify-center">
+          <span className="text-white font-bold text-[11px] sm:text-xs tracking-tight leading-tight">
             Escuela Naval de Cadetes "Almirante Padilla"
           </span>
-          <span className="text-[#8BB4E7] text-[10px] sm:text-xs mt-0.5">
+          <span className="text-[#8BB4E7] text-[9px] sm:text-[10px] leading-tight mt-0.5">
             Decanatura Académica · Cartagena de Indias, D. T. y C.
           </span>
         </div>
       </div>
 
-      {/* Lado Derecho: Créditos en dos líneas indicando Desarrollado por */}
+      {/* Lado Derecho: Créditos en dos líneas con letra más pequeña */}
       <div className="flex flex-col sm:items-end justify-center text-center sm:text-right leading-tight">
-        <span className="text-slate-400 text-[10px] sm:text-xs tracking-wide">
+        <span className="text-slate-400 text-[9px] sm:text-[10px] tracking-wide">
           Sistema Institucional · Mapa de Procesos
         </span>
-        <span className="text-slate-200 text-[11px] sm:text-xs font-medium mt-0.5">
-          Desarrollado por <span className="font-bold text-white">PD02 Beyty P. Camargo M.</span>
+        <span className="text-slate-300 text-[10px] sm:text-[11px] font-medium mt-0.5">
+          Desarrollado por <span className="font-bold text-white text-[10px] sm:text-[11px]">PD02 Beyty P. Camargo M.</span>
         </span>
       </div>
     </footer>
