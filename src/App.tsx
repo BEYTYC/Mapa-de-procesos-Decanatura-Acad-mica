@@ -44,12 +44,12 @@ import { ProtocoloTitulacionModal } from './components/ProtocoloTitulacionModal'
 // --- Fondo Institucional con Marca de Agua Protocolaria ---
 const ProtocolBackground: React.FC = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#F4F6F9]">
-    {/* Marca de agua central gigante del Escudo ENAP */}
-    <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] select-none">
+    {/* Marca de agua central sutil del Escudo ENAP */}
+    <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] select-none">
       <img 
         src="https://i.ibb.co/p6wfvf20/logo.png" 
         alt="" 
-        className="w-[750px] h-[750px] md:w-[850px] md:h-[850px] object-contain filter text-[#0A1F3C]"
+        className="w-[650px] h-[650px] md:w-[750px] md:h-[750px] object-contain filter text-[#0A1F3C]"
       />
     </div>
 
@@ -66,10 +66,6 @@ export default function App() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.procesos && parsed.entrada && parsed.salida) {
-          // Auto-upgrade graduacion to have the official 7 stages from the Titulación portal script
-          if (parsed.procesos.graduacion) {
-            parsed.procesos.graduacion = INITIAL_APP_DATA.procesos.graduacion;
-          }
           return parsed;
         }
       }
@@ -393,14 +389,14 @@ export default function App() {
   const shouldShowSidebar = level >= 2 && isSidebarOpen;
 
   return (
-    <div className="min-h-screen text-[#0A1F3C] font-sora relative flex flex-col overflow-x-hidden bg-[#EEF4FA]">
+    <div className="h-screen w-screen text-[#0A1F3C] font-sans relative flex flex-col overflow-hidden bg-[#EEF4FA]">
       <ProtocolBackground />
 
       {/* CONTENEDOR FIJO SUPERIOR: HEADER + ADMIN TOOLBAR + BREADCRUMBS */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col bg-white shadow-xs">
+      <div className="shrink-0 z-40 flex flex-col bg-white shadow-xs">
         {/* CABECERA INSTITUCIONAL EN AZUL NAVY */}
-        <header className="h-[70px] bg-[#0A1F3C] border-b border-[#1E3A8A]/40 px-4 lg:px-8 flex items-center justify-between shadow-md">
-          <div className="flex items-center gap-3">
+        <header className="h-[88px] bg-[#0A1F3C] px-4 lg:px-8 flex items-center justify-between shadow-md relative">
+          <div className="flex items-center gap-3 md:gap-4">
             {/* Botón Toggle para Menú Lateral (Visible sólo si estamos en Nivel 2 o 3) */}
             {level >= 2 && (
               <button
@@ -413,47 +409,59 @@ export default function App() {
               </button>
             )}
 
-            <img 
-              id="escudo"
-              src="https://i.ibb.co/p6wfvf20/logo.png" 
-              alt="Escudo ENAP" 
-              className="h-[54px] md:h-[58px] w-auto object-contain transition-all"
-              onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
-              }}
-            />
-            <div className="flex flex-col">
-              <h1 className="text-white font-bold text-sm sm:text-base tracking-tight leading-tight flex items-center gap-2">
-                Decanatura Académica
-                <span className="text-[10px] font-mono text-[#C6A15B] bg-[#C6A15B]/15 border border-[#C6A15B]/40 px-2 py-0.5 rounded-full font-bold">
-                  ENAP
-                </span>
+            {/* Logo / Escudo ENAP sutil, un poco más pequeño */}
+            <div className="relative flex items-center justify-center shrink-0">
+              <img 
+                id="escudo"
+                src="https://i.ibb.co/p6wfvf20/logo.png" 
+                alt="Escudo ENAP" 
+                className="h-[42px] md:h-[48px] w-auto object-contain enap-logo-glow select-none"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = 'none';
+                }}
+              />
+            </div>
+
+            {/* Jerarquía Institucional ENAP */}
+            <div className="flex flex-col justify-center">
+              <h1 className="text-white font-bold text-xs sm:text-sm md:text-base tracking-tight leading-tight">
+                Escuela Naval de Cadetes "Almirante Padilla"
               </h1>
-              <span className="text-slate-300 text-[11px] font-normal tracking-wide hidden sm:block">
-                Escuela Naval de Cadetes «Almirante Padilla»
+              <span className="text-[10px] sm:text-[11px] font-bold text-[#C6A15B] uppercase tracking-wider mt-0.5 leading-none">
+                DECANATURA ACADÉMICA
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-[#8BB4E7] font-normal tracking-wide mt-0.5">
+                Cartagena de Indias, D. T. y C.
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <div className="hidden md:flex text-[11px] font-mono font-semibold text-slate-200 bg-white/10 border border-white/15 px-3 py-1.5 rounded-full tracking-wider items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#C6A15B]" />
-              MAPA DE PROCESOS ACADÉMICOS
+          {/* Lado derecho: Sistema Institucional alineado con Acceso Admin */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            <div className="hidden sm:flex flex-col items-end text-right leading-tight">
+              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                Sistema Institucional
+              </span>
+              <span className="text-xs font-bold text-slate-200">
+                Mapa de Procesos Académicos
+              </span>
             </div>
 
-            {/* Botón de Acceso Admin si no está conectado */}
+            <div className="hidden sm:block h-8 w-px bg-white/20" />
+
+            {/* Botón de Acceso Admin si no está conectado o badge */}
             {!isAdmin ? (
               <button
                 onClick={() => setIsLoginModalOpen(true)}
-                className="bg-[#C6A15B]/20 hover:bg-[#C6A15B]/30 text-[#C6A15B] hover:text-white border border-[#C6A15B]/50 px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
-                title="Acceso de Administrador para modificar textos y cajas"
+                className="bg-[#C6A15B]/20 hover:bg-[#C6A15B]/30 text-[#C6A15B] hover:text-white border border-[#C6A15B]/60 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
+                title="Acceso de Administrador para modificar textos y procesos"
               >
                 <Lock className="w-3.5 h-3.5" />
                 <span>Acceso Admin</span>
               </button>
             ) : (
               <div className="flex items-center gap-1.5">
-                <span className="text-[11px] font-mono font-extrabold text-[#C6A15B] bg-[#C6A15B]/15 border border-[#C6A15B]/40 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                <span className="text-[11px] font-mono font-extrabold text-[#C6A15B] bg-[#C6A15B]/15 border border-[#C6A15B]/50 px-2.5 py-1 rounded-full flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   Admin
                 </span>
@@ -461,6 +469,9 @@ export default function App() {
             )}
           </div>
         </header>
+
+        {/* LÍNEA AMARILLA / DORADA INSTITUCIONAL VIBRANTE Y VISIBLE */}
+        <div className="h-[3.5px] bg-[#C6A15B] w-full shrink-0 shadow-xs" />
 
         {/* TOOLBAR DE ADMINISTRADOR (SÓLO SI ESTÁ AUTENTICADO) */}
         {isAdmin && (
@@ -521,35 +532,26 @@ export default function App() {
           </ul>
 
           <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => setIsProtocoloModalOpen(true)}
-              className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-[#8A651E] border border-[#C6A15B]/50 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer"
-              title="Ver Catálogo de Programas, Documentos y Protocolo Oficial de Grados"
-            >
-              <GraduationCap className="w-3.5 h-3.5 text-[#C6A15B]" />
-              <span className="hidden sm:inline">Guía Portal de Titulación ENAP</span>
-              <span className="sm:hidden">Guía Titulación</span>
-            </button>
-
             <div className="hidden sm:flex items-center gap-2 text-[11px] font-mono text-slate-500">
-              <span>Subir nivel:</span>
+              <span>Atrás:</span>
               <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-700">ESC</kbd>
             </div>
           </div>
         </nav>
       </div>
 
-      {/* MENÚ LATERAL INTERACTIVO (Sólo en Nivel 2 y 3) */}
-      <AnimatePresence>
-        {shouldShowSidebar && (
-          <motion.aside
-            initial={{ x: -300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 220 }}
-            style={{ top: isAdmin ? '160px' : '112px' }}
-            className="fixed left-0 bottom-0 w-[290px] bg-white border-r border-slate-200 z-30 p-4 flex flex-col shadow-xl overflow-hidden"
-          >
+      {/* CONTENEDOR PRINCIPAL CON MENÚ LATERAL Y SCROLL INTERNO */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* MENÚ LATERAL INTERACTIVO (Sólo en Nivel 2 y 3) */}
+        <AnimatePresence>
+          {shouldShowSidebar && (
+            <motion.aside
+              initial={{ x: -290, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -290, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 220 }}
+              className="absolute lg:static left-0 top-0 bottom-0 w-[290px] shrink-0 h-full bg-white border-r border-slate-200 z-30 p-4 flex flex-col shadow-xl lg:shadow-none overflow-hidden"
+            >
             {/* Header del Sidebar */}
             <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
               <div>
@@ -557,7 +559,7 @@ export default function App() {
                   <BookOpen className="w-4 h-4 text-[#0A1F3C]" />
                   Índice de Procesos
                 </h3>
-                <span className="text-[10px] text-slate-500 font-mono">Nivel 2 & 3 · ENAP</span>
+                <span className="text-[10px] text-slate-500 font-mono">Procesos Académicos · ENAP</span>
               </div>
 
               <button 
@@ -590,7 +592,6 @@ export default function App() {
                 <Box className="w-4 h-4 text-[#C6A15B]" />
                 Volver al Mapa General
               </span>
-              <span className="font-mono text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded font-bold">N1</span>
             </button>
 
             {/* Lista Acordeón de Procesos y Subprocesos */}
@@ -673,15 +674,9 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* CONTENIDO PRINCIPAL */}
-      <main 
-        className={cn(
-          "flex-1 px-4 lg:px-8 pb-16 transition-all duration-300 relative z-10",
-          isAdmin ? "pt-[172px]" : "pt-[124px]",
-          shouldShowSidebar ? "lg:pl-[310px]" : "lg:pl-8"
-        )}
-      >
-        <div className="max-w-7xl mx-auto">
+      {/* CONTENIDO PRINCIPAL CON SCROLL VERTICAL INTERNO */}
+      <main className="flex-1 h-full overflow-y-auto overflow-x-hidden px-4 lg:px-8 py-6 relative z-10 custom-scrollbar">
+        <div className="max-w-7xl mx-auto pb-12">
           <AnimatePresence mode="wait">
 
             {/* ==========================================
@@ -701,7 +696,7 @@ export default function App() {
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <span className="font-mono text-xs font-bold text-[#0A1F3C] uppercase tracking-widest bg-white px-3.5 py-1 rounded-full border border-slate-200 shadow-xs inline-flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-[#C6A15B]" />
-                      {appData.headerNivel1.badge}
+                      {appData.headerNivel1.badge.replace(/Nivel \d+\s*[-—–:]*\s*/gi, '')}
                     </span>
                     {isAdmin && isEditMode && (
                       <button
@@ -739,7 +734,7 @@ export default function App() {
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); setEditingGate('entrada'); }}
                                 className="p-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[9px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
-                                title="Editar Caja de Entrada"
+                                title="Editar Bloque de Entrada"
                               >
                                 <Edit3 className="w-3 h-3 text-[#8A651E]" />
                                 <span>Editar</span>
@@ -792,11 +787,11 @@ export default function App() {
                                 isOpening ? "is-opening border-[#0A1F3C] ring-2 ring-[#C6A15B]" : ""
                               )}
                             >
-                              {/* TAPA SUPERIOR FÍSICA DE LA CAJA */}
+                              {/* TAPA SUPERIOR FÍSICA DEL PROCESO */}
                               <div className="process-box-lid flex items-center justify-between">
                                 <span className="font-mono text-[10px] font-extrabold text-[#C6A15B] tracking-wider uppercase flex items-center gap-1.5">
                                   <Box className="w-3.5 h-3.5 text-[#C6A15B]" />
-                                  CAJA DE PROCESO
+                                  PROCESO ACADÉMICO
                                 </span>
                                 
                                 <div className="flex items-center gap-1.5">
@@ -808,7 +803,7 @@ export default function App() {
                                         setEditingProcessKey(key);
                                       }}
                                       className="relative z-30 px-2 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[9px] font-bold flex items-center gap-1 shadow-xs transition-colors cursor-pointer"
-                                      title="Editar textos de esta caja de proceso"
+                                      title="Editar textos de este proceso"
                                     >
                                       <Edit3 className="w-3 h-3 text-[#8A651E]" />
                                       <span>Editar</span>
@@ -834,15 +829,15 @@ export default function App() {
                                     <Box className="w-5 h-5" />
                                   </motion.div>
                                   <span className="font-mono text-[11px] font-black text-[#C6A15B] uppercase tracking-wider mb-0.5">
-                                    ¡Abre la Caja!
+                                    ¡Abriendo Proceso!
                                   </span>
                                   <span className="text-[10px] font-medium text-slate-200">
-                                    Saliendo {proc.subprocesos?.length || 0} subprocesos...
+                                    Cargando {proc.subprocesos?.length || 0} subprocesos...
                                   </span>
                                 </motion.div>
                               </div>
 
-                              {/* CUERPO PRINCIPAL DE LA CAJA */}
+                              {/* CUERPO PRINCIPAL DEL PROCESO */}
                               <div className="flex flex-col relative z-10 w-full mt-1">
                                 <div className="flex items-center justify-between mb-2">
                                   <span className="font-mono text-[9px] font-bold text-slate-500 uppercase tracking-wide">
@@ -862,10 +857,10 @@ export default function App() {
                                 </p>
                               </div>
 
-                              {/* Pie de la Caja - Botón de Apertura */}
+                              {/* Pie del Proceso - Botón de Apertura */}
                               <div className="relative z-10 pt-2.5 mt-3 border-t border-slate-100 flex items-center justify-between">
                                 <span className="text-[11px] font-extrabold text-[#0A1F3C] group-hover:text-[#102A50] flex items-center gap-1 transition-transform group-hover:translate-x-1 ml-auto">
-                                  Abrir Caja <ChevronRight className="w-3.5 h-3.5 text-[#C6A15B]" />
+                                  Abrir proceso <ChevronRight className="w-3.5 h-3.5 text-[#C6A15B]" />
                                 </span>
                               </div>
                             </motion.button>
@@ -882,7 +877,7 @@ export default function App() {
                                     disabled={idx === 0}
                                     onClick={() => handleMoveProcess(key, 'left')}
                                     className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
-                                    title="Mover caja a la izquierda (antes)"
+                                    title="Mover proceso a la izquierda (antes)"
                                   >
                                     <ChevronLeft className="w-3 h-3" />
                                     <span>Antes</span>
@@ -892,7 +887,7 @@ export default function App() {
                                     disabled={idx === processKeys.length - 1}
                                     onClick={() => handleMoveProcess(key, 'right')}
                                     className="px-2 py-1 bg-white hover:bg-slate-100 text-[#0A1F3C] border border-slate-300 rounded text-[10px] font-bold flex items-center gap-0.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
-                                    title="Mover caja a la derecha (después)"
+                                    title="Mover proceso a la derecha (después)"
                                   >
                                     <span>Después</span>
                                     <ChevronRight className="w-3 h-3" />
@@ -922,7 +917,7 @@ export default function App() {
                         );
                       })}
 
-                      {/* Tarjeta para Agregar Nueva Caja de Proceso en Modo Admin */}
+                      {/* Tarjeta para Agregar Nuevo Proceso en Modo Admin */}
                       {isAdmin && isEditMode && (
                         <div className="relative flex flex-col w-full">
                           <button
@@ -933,7 +928,7 @@ export default function App() {
                               <Plus className="w-5 h-5" />
                             </div>
                             <span className="font-mono text-[11px] font-black text-[#0A1F3C] uppercase tracking-wider">
-                              + Agregar Nueva Caja
+                              + Agregar Nuevo Proceso
                             </span>
                             <span className="text-[10px] text-slate-500 mt-1">
                               Crear nuevo proceso en el flujo
@@ -962,7 +957,7 @@ export default function App() {
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); setEditingGate('salida'); }}
                                 className="p-1 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[9px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
-                                title="Editar Caja de Salida"
+                                title="Editar Bloque de Salida"
                               >
                                 <Edit3 className="w-3 h-3 text-[#8A651E]" />
                                 <span>Editar</span>
@@ -1005,69 +1000,48 @@ export default function App() {
                 transition={{ duration: 0.35 }}
                 className="w-full flex flex-col items-center"
               >
-                {/* Barra superior de navegación */}
-                <div className="w-full flex flex-wrap items-center justify-between gap-3 mb-6 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
-                  <button 
-                    onClick={() => setLevel(1)}
-                    className="bg-[#0A1F3C] text-white hover:bg-[#102A50] px-4 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 transition-all shadow-md cursor-pointer"
-                  >
-                    <CornerDownLeft className="w-4 h-4 text-[#C6A15B]" />
-                    ← Volver al Mapa General de Procesos
-                  </button>
-
-                  <button 
-                    onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                    className="text-xs font-bold text-[#0A1F3C] bg-slate-100 hover:bg-slate-200 px-3.5 py-2.5 rounded-xl border border-slate-200 flex items-center gap-2 cursor-pointer transition-colors"
-                  >
-                    <Menu className="w-4 h-4 text-[#0A1F3C]" />
-                    <span>{isSidebarOpen ? "Cerrar Menú Lateral" : "Ver Menú / Índice de Procesos"}</span>
-                  </button>
-                </div>
-
-                {/* Encabezado Nivel 2 */}
-                <div className="text-center mb-6 relative">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="font-mono text-xs font-bold text-[#0A1F3C] uppercase tracking-widest bg-white px-3.5 py-1 rounded-full border border-slate-200 shadow-sm inline-flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#C6A15B]" />
-                      Nivel 2 — Secuencia de Subprocesos
-                    </span>
+                {/* Encabezado del Proceso */}
+                <div className="text-center mb-6 relative flex flex-col items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-2xl lg:text-3xl font-extrabold text-[#0A1F3C] tracking-tight">
+                      {activeProcess.titulo}
+                    </h2>
                     {isAdmin && isEditMode && (
                       <button
                         onClick={() => setEditingProcessKey(activeProcessKey)}
                         className="px-2.5 py-1 text-xs font-bold text-[#0A1F3C] bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-full transition-colors cursor-pointer flex items-center gap-1 shadow-2xs"
-                        title="Editar título y descripción de este proceso"
+                        title="Editar título y definición del proceso"
                       >
                         <Edit3 className="w-3 h-3 text-[#8A651E]" />
-                        <span>Editar Info del Proceso</span>
+                        <span>Editar</span>
                       </button>
                     )}
                   </div>
-                  <h2 className="text-2xl font-extrabold text-[#0A1F3C] mb-1.5">
-                    <span>{activeProcess.titulo}</span>
-                  </h2>
-                  <p className="text-xs sm:text-[13px] text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                    {activeProcess.descripcion} Seleccione cualquiera de los pasos para ver sus detalles completos.
-                  </p>
+                  {/* Definición corta del proceso debajo del título */}
+                  {activeProcess.resumen && (
+                    <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed mt-1.5 font-normal text-center">
+                      {activeProcess.resumen}
+                    </p>
+                  )}
                 </div>
 
-                {/* Grid de Subprocesos */}
-                <div className="w-full bg-white rounded-2xl border border-slate-200 p-5 md:p-6 shadow-xl relative overflow-hidden">
-                  <div className="box-interior-floor p-4 md:p-5 rounded-xl relative overflow-visible">
-                    <motion.div 
-                      variants={{
-                        hidden: { opacity: 0 },
-                        show: {
-                          opacity: 1,
-                          transition: {
-                            staggerChildren: 0.08,
-                            delayChildren: 0.05
-                          }
+                {/* Grid de Subprocesos (sin el recuadro contenedor exterior) */}
+                <div className="w-full relative">
+                  <motion.div 
+                    variants={{
+                      hidden: { opacity: 0 },
+                      show: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.08,
+                          delayChildren: 0.05
                         }
-                      }}
-                      initial="hidden"
-                      animate="show"
-                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 relative z-10 box-perspective-container"
-                    >
+                      }
+                    }}
+                    initial="hidden"
+                    animate="show"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 relative z-10 box-perspective-container"
+                  >
                       {activeProcess.subprocesos.map((sub, idx) => {
                         const isLast = idx === activeProcess.subprocesos.length - 1;
                         const nextSub = !isLast ? activeProcess.subprocesos[idx + 1] : null;
@@ -1092,8 +1066,8 @@ export default function App() {
                             >
                               <div>
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="font-mono text-[10px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
-                                    Paso {sub.stepNum} ({sub.id})
+                                  <span className="font-mono text-[11px] font-extrabold text-[#0A1F3C] bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-md">
+                                    {sub.id}
                                   </span>
                                   <div className="flex items-center gap-1.5">
                                     {isAdmin && isEditMode && (
@@ -1104,15 +1078,12 @@ export default function App() {
                                           setEditingSubprocess({ procKey: activeProcessKey, subIndex: idx });
                                         }}
                                         className="px-1.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded text-[9px] font-bold flex items-center gap-0.5 shadow-2xs transition-colors cursor-pointer"
-                                        title="Editar este paso"
+                                        title="Editar este subproceso"
                                       >
                                         <Edit3 className="w-2.5 h-2.5 text-[#8A651E]" />
                                         <span>Editar</span>
                                       </button>
                                     )}
-                                    <span className="text-[9px] font-mono font-bold text-[#C6A15B] bg-[#0A1F3C] px-1.5 py-0.5 rounded-full">
-                                      {sub.stepNum} / {activeProcess.subprocesos.length}
-                                    </span>
                                   </div>
                                 </div>
 
@@ -1180,10 +1151,10 @@ export default function App() {
                             {!isLast && (
                               <div className="flex lg:hidden justify-center my-1.5 z-20">
                                 <div className="bg-[#0A1F3C] text-[#C6A15B] border border-[#C6A15B] px-3 py-1 rounded-full shadow-xs flex items-center gap-1.5 text-[11px] font-mono font-bold">
-                                  <span>Paso {sub.stepNum}</span>
+                                  <span>{sub.id}</span>
                                   <ArrowRight className="w-3.5 h-3.5 text-[#C6A15B] sm:inline hidden" />
                                   <ArrowDown className="w-3.5 h-3.5 text-[#C6A15B] sm:hidden" />
-                                  <span className="text-white">Paso {nextSub?.stepNum}</span>
+                                  <span className="text-white">{nextSub?.id}</span>
                                 </div>
                               </div>
                             )}
@@ -1212,7 +1183,6 @@ export default function App() {
                       )}
                     </motion.div>
                   </div>
-                </div>
               </motion.div>
             )}
 
@@ -1228,34 +1198,6 @@ export default function App() {
                 transition={{ duration: 0.3 }}
                 className="w-full flex flex-col items-center"
               >
-                {/* Barra superior de navegación */}
-                <div className="w-full flex flex-wrap items-center justify-between gap-3 mb-6 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <button 
-                      onClick={() => setLevel(1)}
-                      className="bg-[#0A1F3C] text-white hover:bg-[#102A50] px-4 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 transition-all shadow-md cursor-pointer"
-                    >
-                      <CornerDownLeft className="w-4 h-4 text-[#C6A15B]" />
-                      ← Volver al Mapa General
-                    </button>
-                    <button 
-                      onClick={() => setLevel(2)}
-                      className="bg-slate-100 hover:bg-slate-200 text-[#0A1F3C] px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-200 cursor-pointer transition-colors"
-                    >
-                      <ChevronLeft className="w-4 h-4 text-[#0A1F3C]" />
-                      Volver a {activeProcess.titulo}
-                    </button>
-                  </div>
-
-                  <button 
-                    onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                    className="text-xs font-bold text-[#0A1F3C] bg-slate-100 hover:bg-slate-200 px-3.5 py-2.5 rounded-xl border border-slate-200 flex items-center gap-2 cursor-pointer transition-colors"
-                  >
-                    <Menu className="w-4 h-4 text-[#0A1F3C]" />
-                    <span>{isSidebarOpen ? "Cerrar Menú" : "Ver Menú / Índice"}</span>
-                  </button>
-                </div>
-
                 {/* Tracker Visual de Pasos */}
                 <div className="w-full bg-white rounded-2xl border border-slate-200 p-4 mb-6 shadow-sm flex flex-wrap items-center justify-between gap-3">
                   <div className="text-xs font-mono font-bold text-[#0A1F3C] flex items-center gap-2">
@@ -1280,8 +1222,7 @@ export default function App() {
                               : "bg-white text-slate-400 border border-slate-200 hover:bg-slate-50"
                           )}
                         >
-                          <span>{sub.stepNum}.</span>
-                          <span className="hidden sm:inline">{sub.id}</span>
+                          <span>{sub.id}</span>
                         </button>
                       );
                     })}
@@ -1295,16 +1236,16 @@ export default function App() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <span className="font-mono text-[11px] font-bold text-[#0A1F3C] bg-slate-100 px-2.5 py-0.5 rounded-md border border-slate-200 inline-block">
-                          SUBPROCESO <span className="text-[#C6A15B]">{activeSubprocess.id}</span> · PASO {activeSubprocess.stepNum} DE {activeProcess.subprocesos.length}
+                          SUBPROCESO <span className="text-[#C6A15B]">{activeSubprocess.id}</span>
                         </span>
                         {isAdmin && isEditMode && (
                           <button
                             onClick={() => setEditingSubprocess({ procKey: activeProcessKey, subIndex: activeSubIndex })}
                             className="px-2.5 py-0.5 bg-amber-100 hover:bg-amber-200 text-[#0A1F3C] border border-amber-300 rounded-md text-[11px] font-bold flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
-                            title="Modificar los textos y listas de este paso"
+                            title="Modificar los textos y listas de este subproceso"
                           >
                             <Edit3 className="w-3 h-3 text-[#8A651E]" />
-                            <span>Editar este Paso</span>
+                            <span>Editar Subproceso</span>
                           </button>
                         )}
                       </div>
@@ -1389,7 +1330,7 @@ export default function App() {
 
                     <div className="flex items-center gap-4">
                       <span className="font-mono text-xs font-bold text-[#0A1F3C]">
-                        Paso {activeSubIndex + 1} de {activeProcess.subprocesos.length}
+                        Subproceso {activeSubIndex + 1} de {activeProcess.subprocesos.length}
                       </span>
                     </div>
 
@@ -1409,9 +1350,43 @@ export default function App() {
           </AnimatePresence>
         </div>
       </main>
+    </div>
 
-      {/* MODAL DE LOGIN ADMIN */}
-      <AdminLoginModal
+    {/* FRANJA AZUL INFERIOR INSTITUCIONAL FIJA (HORIZONTAL EN LA BASE DE LA PANTALLA) */}
+    <footer className="w-full shrink-0 bg-[#0A1F3C] border-t-[3.5px] border-[#C6A15B] py-2 sm:py-2.5 px-4 sm:px-8 lg:px-12 shadow-2xl z-40 text-white flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
+      {/* Lado Izquierdo: Escudo institucional y jerarquía en dos líneas */}
+      <div className="flex items-center gap-3.5">
+        <img 
+          src="https://i.ibb.co/p6wfvf20/logo.png" 
+          alt="Escudo ENAP" 
+          className="h-11 sm:h-[53px] w-auto object-contain enap-logo-glow select-none shrink-0"
+          onError={(e) => {
+            (e.target as HTMLElement).style.display = 'none';
+          }}
+        />
+        <div className="flex flex-col justify-center leading-tight">
+          <span className="text-white font-bold text-xs sm:text-sm tracking-tight">
+            Escuela Naval de Cadetes "Almirante Padilla"
+          </span>
+          <span className="text-[#8BB4E7] text-[10px] sm:text-xs mt-0.5">
+            Decanatura Académica · Cartagena de Indias, D. T. y C.
+          </span>
+        </div>
+      </div>
+
+      {/* Lado Derecho: Créditos en dos líneas indicando Desarrollado por */}
+      <div className="flex flex-col sm:items-end justify-center text-center sm:text-right leading-tight">
+        <span className="text-slate-400 text-[10px] sm:text-xs tracking-wide">
+          Sistema Institucional · Mapa de Procesos
+        </span>
+        <span className="text-slate-200 text-[11px] sm:text-xs font-medium mt-0.5">
+          Desarrollado por <span className="font-bold text-white">PD02 Beyty P. Camargo M.</span>
+        </span>
+      </div>
+    </footer>
+
+    {/* MODAL DE LOGIN ADMIN */}
+    <AdminLoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         onSuccessLogin={handleSuccessLogin}

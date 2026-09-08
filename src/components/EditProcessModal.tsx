@@ -175,7 +175,7 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
 
             <div>
               <label className="block text-xs font-mono font-bold text-[#0A1F3C] uppercase mb-1">
-                Resumen Breve (Visible en la Tarjeta/Caja)
+                Definición Corta del Proceso (Visible debajo del título)
               </label>
               <textarea
                 rows={2}
@@ -189,7 +189,7 @@ export const EditProcessModal: React.FC<EditProcessModalProps> = ({
 
             <div>
               <label className="block text-xs font-mono font-bold text-[#0A1F3C] uppercase mb-1">
-                Descripción Detallada (Visible en el Nivel 2)
+                Descripción Detallada del Proceso
               </label>
               <textarea
                 rows={3}
