@@ -234,148 +234,282 @@ export const INITIAL_PROCESOS: Record<string, Process> = {
     "id": "graduacion",
     "codigo": "PROC-03",
     "titulo": "Graduación y Titulación",
-    "resumen": "Protocolo oficial del Portal de Titulación ENAP: desde la solicitud del estudiante hasta la emisión de diplomas por Estadística y la entrega en ceremonia solemne.",
-    "descripcion": "Tercer eslabón culminante del proceso académico de la ENAP. Flujo oficial estructurado en seis etapas secuenciales obligatorias según el Protocolo Institucional de Grados y Diplomas.",
+    "resumen": "Manual detallado etapa por etapa: desde la apertura de la ceremonia por Secretaría Académica hasta la resolución y entrega de diplomas.",
+    "descripcion": "Proceso oficial de diez (10) etapas agrupadas en cuatro (4) fases institucionales: Apertura y radicación, Validación académica, Aprobación institucional y Formalización y cierre.",
     "estado": "documentado",
-    "badgeText": "Protocolo Oficial ENAP",
+    "badgeText": "Manual Oficial de Graduación y Titulación ENAP",
     "subprocesos": [
       {
-        "id": "3.1",
+        "id": "Etapa 0",
         "stepNum": 1,
-        "titulo": "1. Solicitud de titulación por el estudiante",
-        "resumen": "El estudiante radica su solicitud formal en línea adjuntando datos de filiación, autorización de datos y documentos obligatorios.",
-        "responsable": "Estudiante / Candidato a Grado",
+        "fase": "Fase 1 · Apertura y radicación",
+        "titulo": "0. Apertura de la ceremonia",
+        "resumen": "La Secretaría Académica programa la ceremonia de grados, definiendo la fecha tentativa del evento y la ventana de fechas para radicar solicitudes.",
+        "responsable": "Secretaría Académica",
         "queSeHace": [
-          "Ingreso al Portal Público de Titulación ENAP y selección del programa académico oficial.",
-          "Diligenciamiento de datos de filiación, lugar de expedición del documento y autorización de tratamiento de datos personales.",
-          "Cargue digital de los documentos en formato PDF (máximo 15 MB por archivo): cédula al 150%, comprobantes de pago de derechos y estampilla, diploma anterior y Saber Pro si aplica.",
-          "Generación automática del código de radicado institucional único (formato SG-AAAAMMDD-HHMMSS).",
-          "Recepción de confirmación por correo electrónico y notificación a la facultad respectiva para inicio de trámite."
+          "Programación oficial de la ceremonia de grados en el calendario institucional.",
+          "Definición de la fecha tentativa del evento y la ventana de fechas para radicación de solicitudes de grado por ceremonia.",
+          "Habilitación de la opción 'grado por ceremonia' para los estudiantes en el Portal Estadístico ENAP (intranet institucional o acceso externo en enap.vercel.app).",
+          "Mantenimiento permanente de la opción de radicación por ventanilla disponible en todo momento, independiente de la apertura de ceremonia."
         ],
         "queSeNecesita": [
-          "Documento de Identidad (ambas caras ampliado al 150%)",
+          "Calendario académico institucional aprobado",
+          "Portal Estadístico ENAP — módulo de gestión de ceremonias, panel de la Secretaría Académica (SAC)"
+        ],
+        "terminaCuando": "Ceremonia habilitada y ventana de radicación definida y activa en el sistema.",
+        "entradas": ["Calendario académico institucional"],
+        "salidas": ["Ceremonia habilitada y ventana de radicación definida en el sistema"],
+        "sistemaApoyo": "Portal Estadístico ENAP - módulo de gestión de ceremonias, panel de la Secretaría Académica (SAC)"
+      },
+      {
+        "id": "Etapa 1",
+        "stepNum": 2,
+        "fase": "Fase 1 · Apertura y radicación",
+        "titulo": "1. Radicación de la solicitud",
+        "resumen": "El estudiante radica su solicitud, carga documentos según nivel y condición, y autoriza con un clic el tratamiento de datos personales (sin firmas).",
+        "responsable": "Estudiante",
+        "queSeHace": [
+          "Inicio de solicitud de grado por ceremonia (si la fecha vigente lo permite) o por ventanilla (disponible en todo momento).",
+          "Diligenciamiento de datos personales y selección de programa académico para determinar nivel (Pregrado o Posgrado).",
+          "Cargue digital de documentos de soporte según nivel y condición (Civil o Militar): Cédula/Pasaporte, pago Derechos de Grado, pago Estampilla Procultura, Diploma/Acta anterior, Saber Pro (pregrado) y fotografía formal 3x4 fondo azul (militares: uniforme 3A).",
+          "Generación automática por el sistema del formato de autorización de tratamiento de datos personales con la información suministrada.",
+          "Aceptación de la autorización de datos por parte del estudiante dando un clic (el estudiante no firma nada, solo le da clic a la autorización de datos).",
+          "Recepción de correo de confirmación de radicado institucional con la autorización adjunta."
+        ],
+        "queSeNecesita": [
+          "Cédula de ciudadanía o Pasaporte vigente",
           "Comprobante de Pago de Derechos de Grado",
           "Comprobante de Pago Estampilla Procultura",
-          "Diploma o Acta de Grado Anterior (Bachiller para Pregrado / Pregrado para Posgrado)",
-          "Resultados Pruebas Saber Pro / TyT (Pregrado)",
-          "Constancia de Diplomado (si aplica)",
-          "Autorización formal de tratamiento de datos personales"
+          "Diploma o Acta de Grado anterior (Bachiller para Pregrado / Pregrado para Posgrado)",
+          "Resultados Pruebas Saber Pro (Pregrado) / Constancias de diplomado, ponencia o producción científica si aplica",
+          "Fotografía formal 3x4 fondo azul (militares: en uniforme 3A)",
+          "Clic de aceptación a la autorización de tratamiento de datos personales"
         ],
-        "terminaCuando": "El estudiante recibe su número de radicado SG-... y el expediente queda en estado 'Radicada por el estudiante'."
+        "terminaCuando": "Solicitud radicada, autorización de tratamiento de datos aceptada con un clic y correo de confirmación de radicado emitido.",
+        "entradas": ["Documentos de soporte según nivel y condición", "Datos personales del estudiante"],
+        "salidas": ["Solicitud radicada", "Autorización de tratamiento de datos autorizada con un clic", "Correo de confirmación de radicado"],
+        "sistemaApoyo": "Portal Estadístico ENAP — módulo de radicación de grados; correo institucional"
       },
       {
-        "id": "3.2",
-        "stepNum": 2,
-        "titulo": "2. Aprobación y complemento de información por Jefatura de Programa",
-        "resumen": "El jefe de programa aprueba la solicitud, audita el plan de estudios, completa los documentos institucionales y otorga avales individuales.",
-        "responsable": "Jefe de Programa Académico",
+        "id": "Etapa 2",
+        "stepNum": 3,
+        "fase": "Fase 2 · Validación académica",
+        "titulo": "2. Validación de programa",
+        "resumen": "El Jefe de Programa revisa la documentación radicada del estudiante, solicita ajustes si aplica, completa y carga los documentos institucionales al expediente.",
+        "responsable": "Jefe de Programa",
         "queSeHace": [
-          "Ingreso al Panel de Facultades mediante código de seguridad OTP de 6 dígitos enviado al correo institucional.",
-          "Auditoría académica integral: validación del 100% de créditos aprobados y cumplimiento de requisitos curriculares (inglés CIEN, bienestar).",
-          "Cargue y complemento de la información institucional: Balance Académico, Formato de Calificación de Grado, Certificado de Promedio y Actas de Sustentación (Anexo 2).",
-          "Revisión y emisión obligatoria de aval individual para cada documento del expediente.",
-          "Verificación de méritos para el Artículo 91 (Graduado de Honor: Promedio > 9.5 y distinción en trabajo de grado).",
-          "Unificación del expediente en PDF con portada oficial A4 y ejecución de la acción 'Solicitar Titulación'."
+          "Revisión de la documentación radicada por cada estudiante de su programa y aprobación de lo cargado (o solicitud de ajustes).",
+          "Garantía y responsabilidad de que toda la documentación cargada esté correcta y libre de errores.",
+          "Elaboración y cargue del Balance Académico (firmado por Jefe de Programa y Decano de la Facultad).",
+          "Diligenciamiento del Formato de Calificación de Grado a nivel de programa.",
+          "Cargue del Certificado de Promedio Ponderado elaborado por el Jefe de Estadística.",
+          "Cargue de la Señal de Certificación de Idioma (emitida por el Centro de Idiomas / CIEN, no el certificado de nivel).",
+          "Cargue de la Evaluación de Trabajo de Grado — Anexo 2 (Evaluación 1 y 2 firmadas).",
+          "Verificación del Soporte de Paz y Salvo financiera emitido por la Oficina de Tesorería.",
+          "Cargue de la Solicitud de Reconocimiento — Evaluador 1 y 2 (aplica únicamente cuando el graduando es meritorio).",
+          "Disparo automático de notificación por correo electrónico al Decano de Facultad al aprobar el registro."
         ],
         "queSeNecesita": [
-          "Balance Académico oficial con 100% de créditos culminados",
-          "Formato oficial de Calificación de Grado",
-          "Certificado de Promedio Ponderado Acumulado",
-          "Certificación de Idioma Extranjero (Inglés / CIEN)",
-          "Evaluación de Trabajo de Grado — Anexo 2 (Evaluadores 1 y 2)",
-          "Solicitud de Reconocimiento / Distinción (si aplica)",
-          "Código OTP de autenticación institucional"
+          "Solicitudes radicadas por los estudiantes del programa",
+          "Balance Académico firmado por Jefe de Programa y Decano de Facultad",
+          "Formato de Calificación de Grado diligenciado",
+          "Certificado de Promedio Ponderado (Jefe de Estadística)",
+          "Señal de Certificación de Idioma (Centro de Idiomas / CIEN)",
+          "Evaluación de Trabajo de Grado — Anexo 2 firmado",
+          "Soporte de Paz y Salvo financiera (Tesorería)",
+          "Solicitud de Reconocimiento (si el graduando es meritorio)"
         ],
-        "terminaCuando": "El expediente queda 100% completado, avalado, unificado en PDF con respaldo en OneDrive y enviado a Secretaría Académica."
+        "terminaCuando": "Registros individuales validados y aprobados a nivel de programa, documentos institucionales completados y notificación automática enviada al Decano de Facultad.",
+        "entradas": ["Solicitudes radicadas por los estudiantes del programa"],
+        "salidas": ["Registros individuales validados a nivel de programa", "Documentos institucionales del expediente completados", "Notificación automática al Decano de Facultad"],
+        "sistemaApoyo": "Portal Estadístico ENAP — módulo de aprobaciones de grado; correo institucional"
       },
       {
-        "id": "3.3",
-        "stepNum": 3,
-        "titulo": "3. Validación de solicitudes y trámite ante Comité de Decanos y Consejo Académico",
-        "resumen": "El Secretario Académico valida las solicitudes completas y tramita la sustentación ante el Comité de Decanos y Consejo Académico.",
+        "id": "Etapa 3",
+        "stepNum": 4,
+        "fase": "Fase 2 · Validación académica",
+        "titulo": "3. Revisión y aprobación de facultad",
+        "resumen": "El Decano de Facultad revisa el grupo completo de graduandos de su facultad, lo aprueba en bloque con un clic y firma digitalmente el formato de calificación.",
+        "responsable": "Decano de Facultad",
+        "queSeHace": [
+          "Recepción de notificación automática por correo electrónico indicando que el grupo de graduandos de su facultad está listo para revisión.",
+          "Revisión del grupo completo de graduandos de su facultad a través del panel ejecutivo del Decano.",
+          "Aprobación en bloque con un solo clic, actualizando el estado de las solicitudes a 'Documentación completada'.",
+          "Firma digital del formato de calificación de grado correspondiente a su facultad.",
+          "Asunción de la responsabilidad de que cada graduando cumple con los requisitos académicos para optar al título.",
+          "Envío automático de notificación por correo electrónico al Decano Académico."
+        ],
+        "queSeNecesita": [
+          "Registros aprobados por los jefes de programa de la facultad",
+          "Notificación automática por correo electrónico",
+          "Panel ejecutivo del Decano en Portal Estadístico ENAP",
+          "Firma digital del Decano de Facultad"
+        ],
+        "terminaCuando": "Grupo de graduandos de la facultad aprobado en bloque, formato de calificación de grado firmado digitalmente y notificación enviada al Decano Académico.",
+        "entradas": ["Registros aprobados por los jefes de programa de la facultad", "Notificación por correo electrónico"],
+        "salidas": ["Grupo de graduandos de la facultad aprobado", "Formato de calificación de grado de facultad firmado digitalmente", "Notificación automática al Decano Académico"],
+        "sistemaApoyo": "Portal Estadístico ENAP — panel ejecutivo del Decano; correo electrónico institucional"
+      },
+      {
+        "id": "Etapa 4",
+        "stepNum": 5,
+        "fase": "Fase 2 · Validación académica",
+        "titulo": "4. Validación y firma del Decano Académico",
+        "resumen": "El Decano Académico revisa el consolidado institucional de graduandos de todas las facultades, aprueba en bloque con un clic y firma digitalmente a nivel institucional.",
+        "responsable": "Decano Académico",
+        "queSeHace": [
+          "Recepción de notificación automática por correo indicando que hay un grupo consolidado a nivel institucional listo para revisión.",
+          "Revisión del grupo completo de graduandos de toda la institución (consolidado de todas las facultades).",
+          "Aprobación en bloque institucional con un solo clic, actualizando el estado a 'Documentación completada' a nivel institucional.",
+          "Firma digital del formato de calificación de grado a nivel institucional consolidado.",
+          "Envío automático de notificación por correo electrónico al Secretario Académico para dar inicio a la aprobación institucional."
+        ],
+        "queSeNecesita": [
+          "Grupos de graduandos aprobados y firmados por los respectivos Decanos de Facultad",
+          "Notificación automática por correo electrónico",
+          "Panel ejecutivo del Decano Académico en Portal Estadístico ENAP",
+          "Firma digital institucional del Decano Académico"
+        ],
+        "terminaCuando": "Grupo de graduandos de toda la institución aprobado, formato de calificación de grado institucional firmado digitalmente y notificación enviada al Secretario Académico.",
+        "entradas": ["Grupos de graduandos aprobados y firmados por los respectivos Decanos de Facultad", "Notificación automática por correo"],
+        "salidas": ["Grupo de graduandos de toda la institución aprobado", "Formato de calificación institucional firmado digitalmente", "Notificación automática al Secretario Académico"],
+        "sistemaApoyo": "Portal Estadístico ENAP — panel ejecutivo del Decano Académico; correo electrónico institucional"
+      },
+      {
+        "id": "Etapa 5",
+        "stepNum": 6,
+        "fase": "Fase 3 · Aprobación institucional",
+        "titulo": "5. Validación institucional",
+        "resumen": "El Secretario Académico verifica carpetas digitales completas y formatos firmados, generando el reporte y solicitando sesión formal al Consejo Académico.",
         "responsable": "Secretario Académico",
         "queSeHace": [
-          "Recepción y validación jurídica y académica de todas las solicitudes en estado 'Completa' enviadas por las facultades.",
-          "Verificación de los expedientes unificados en PDF, comprobación de paz y salvos y ordenación institucional.",
-          "Convocatoria y presentación del consolidado de aspirantes a grado ante el Comité de Decanos de Facultad.",
-          "Sustanciación y radicación del orden del día formal para la sesión del Consejo Académico.",
-          "Estructuración del proyecto de Resolución de Grado con el listado definitivo de graduandos y distinciones postuladas."
+          "Verificación de que las carpetas digitales de cada graduando contengan la documentación completa (sin revalidar requisitos académicos ya asumidos por Decanaturas).",
+          "Verificación de que el Formato de Calificación de Grado esté firmado digitalmente para cada estudiante por las instancias previas.",
+          "Aprobación o devolución formal de solicitudes incompletas.",
+          "Generación del reporte descargable con información consolidada de cada graduando (tipo de grado, nombres, apellidos, sexo, cédula/pasaporte, programa, título, fecha de grado y promedio).",
+          "Elaboración del formato oficial de presentación para el Consejo Académico.",
+          "Solicitud formal al Consejo Académico para programar la sesión de aprobación del listado."
         ],
         "queSeNecesita": [
-          "Expedientes consolidados en estado 'Completa' de todas las facultades",
-          "Informes de aval de las decanaturas",
-          "Bases de datos de aspirantes a grado",
-          "Proyecto de orden del día y proyecto de Resolución de Grado"
+          "Grupo de graduandos aprobado por el Decano Académico con formato de calificación firmado",
+          "Notificación automática por correo electrónico",
+          "Reporte descargable consolidado del Portal Estadístico ENAP",
+          "Formato de presentación para el Consejo Académico"
         ],
-        "terminaCuando": "El Secretario Académico radica los expedientes validados y el proyecto de resolución en el orden del día del Consejo Académico."
+        "terminaCuando": "Reporte de graduandos generado, formato de presentación elaborado y sesión formal solicitada al Consejo Académico.",
+        "entradas": ["Grupo de graduandos aprobado por el Decano Académico", "Formatos de calificación de grado firmados"],
+        "salidas": ["Reporte de graduandos", "Formato de presentación al Consejo Académico", "Solicitud formal de sesión al Consejo Académico"],
+        "sistemaApoyo": "Portal Estadístico ENAP; correo institucional"
       },
       {
-        "id": "3.4",
-        "stepNum": 4,
-        "titulo": "4. Aprobación de grados por el Consejo Académico",
-        "resumen": "El Consejo Académico sesiona, delibera, aprueba los grados y promulga la Resolución de Grado oficial de la ENAP.",
-        "responsable": "Consejo Académico (Presidido por el Director ENAP)",
+        "id": "Etapa 6",
+        "stepNum": 7,
+        "fase": "Fase 3 · Aprobación institucional",
+        "titulo": "6. Aprobación del Consejo Académico",
+        "resumen": "El Consejo Académico revisa y aprueba formalmente en sesión el listado de graduandos presentado por la Secretaría Académica, autorizando el cierre académico.",
+        "responsable": "Consejo Académico (Secretario Académico como Secretario)",
         "queSeHace": [
-          "Instalación de la sesión del Consejo Académico presidida por el señor Contralmirante Director de la ENAP.",
-          "Revisión y deliberación de los candidatos postulados por las facultades y sustentados por el Secretario Académico.",
-          "Votación formal y aprobación unánime de los títulos académicos a otorgar en los programas de pregrado y posgrado.",
-          "Aprobación formal de las distinciones académicas (Cum Laude, Magna Cum Laude, Summa Cum Laude y Graduado de Honor Art. 91).",
-          "Emisión, firma y promulgación de la Resolución de Grado de la ENAP como acto administrativo legal vinculante."
+          "Instalación de la sesión formal del Consejo Académico con quórum reglamentario.",
+          "Presentación del listado formal de graduandos y expedientes por parte de la Secretaría Académica.",
+          "Revisión y deliberación institucional de los candidatos postulados por las facultades.",
+          "Aprobación formal en sesión del listado de graduandos, autorizando el cierre académico del proceso de grado.",
+          "Elaboración y suscripción del Acta de Aprobación del Consejo Académico por parte del Secretario Académico."
         ],
         "queSeNecesita": [
-          "Expedientes completos avalados por el Comité de Decanos",
-          "Actas de sustentación y conceptos de honor",
-          "Quórum reglamentario del Consejo Académico",
-          "Proyecto de Resolución de Grado"
+          "Reporte de graduandos y formato de presentación de la Secretaría Académica",
+          "Sesión formal con quórum estatutario del Consejo Académico",
+          "Libro de actas institucionales"
         ],
-        "terminaCuando": "Queda firmada y promulgada la Resolución de Grado de la Escuela Naval de Cadetes 'Almirante Padilla'."
+        "terminaCuando": "Acta de aprobación del Consejo Académico elaborada y suscrita, autorizando el cierre académico del proceso.",
+        "entradas": ["Reporte de graduandos y formato de presentación de la Secretaría Académica"],
+        "salidas": ["Acta de aprobación del Consejo Académico elaborada por el Secretario Académico"],
+        "sistemaApoyo": "Sesión formal del Consejo Académico"
       },
       {
-        "id": "3.5",
-        "stepNum": 5,
-        "titulo": "5. Registro institucional y emisión de diplomas por la Oficina de Estadística",
-        "resumen": "La Oficina de Estadística registra a los graduandos en los sistemas y en el SNIES del MEN, caligrafía y emite los diplomas y actas oficiales.",
-        "responsable": "Oficina de Estadística y Registro",
+        "id": "Etapa 7",
+        "stepNum": 8,
+        "fase": "Fase 4 · Formalización y cierre",
+        "titulo": "7. Gestión de cierre",
+        "resumen": "Jefatura de Estadística actualiza el sistema a 'Aprobado', envía correos de felicitación y acceso, actualiza SharePoint, gestiona firmas en Xertify y reporta a SNIES.",
+        "responsable": "Jefe de Estadística",
         "queSeHace": [
-          "Recepción de la Resolución de Grado promulgada y depuración final de datos de filiación contra Registraduría Nacional.",
-          "Registro institucional de los graduandos y precargue oficial de variables en el Sistema Nacional de Información de la Educación Superior (SNIES) del MEN.",
-          "Emisión de los diplomas de grado oficiales en cartulinas institucionales con hologramas, medidas de seguridad y sellos de agua.",
-          "Elaboración y emisión de las Actas de Grado individuales foliadas según el Libro General de Grados.",
-          "Gestión del caligrafiado protocolario y recolección de las firmas autógrafas del Mando Naval (Director ENAP, Decano Académico y Secretario Académico).",
-          "Entrega formal de los diplomas y actas emitidos a la Secretaría Académica para custodia protocolaria previa a la ceremonia."
+          "Actualización del estado del registro a 'Aprobado por Consejo Académico' en el Portal Estadístico ENAP con acta en mano.",
+          "Disparo automático del correo institucional de felicitación e invitación a la ceremonia de grado a cada estudiante.",
+          "Envío automático de correo a los jefes de programa y decanos informando que los grados fueron aprobados y habilitándoles acceso para descargar documentos individuales.",
+          "Integración y actualización de la información consolidada en el libro de graduados en SharePoint.",
+          "Generación del reporte oficial para el cargue de variables en el SNIES del Ministerio de Educación Nacional.",
+          "Gestión del trámite interno para emisión del diploma mediante el aplicativo Xertify para recolección de todas las firmas digitales requeridas."
         ],
         "queSeNecesita": [
-          "Resolución de Grado oficial aprobada y firmada",
-          "Cartulinas oficiales de diplomas institucionales con sellos de seguridad y holograma",
-          "Plataforma SNIES del Ministerio de Educación Nacional",
-          "Libro General de Grados de la ENAP",
-          "Firmas autógrafas del Director de la ENAP, Decano Académico y Secretario Académico"
+          "Acta formal de aprobación del Consejo Académico",
+          "Portal Estadístico ENAP",
+          "Libro de graduados en SharePoint",
+          "Aplicativo Xertify de diplomas digitales",
+          "Plataforma SNIES del Ministerio de Educación Nacional"
         ],
-        "terminaCuando": "Los diplomas y actas de grado están emitidos, caligrafiados, firmados por las tres autoridades y entregados para ceremonia."
+        "terminaCuando": "Estado del registro actualizado a 'Aprobado por Consejo Académico', correos automáticos enviados, SharePoint y SNIES actualizados y firmas digitales gestionadas en Xertify.",
+        "entradas": ["Acta de aprobación del Consejo Académico"],
+        "salidas": [
+          "Estado del registro actualizado a 'Aprobado por Consejo Académico'",
+          "Correo de felicitación e invitación a la ceremonia enviado a los estudiantes",
+          "Correo a jefes de programa y decanos con acceso a descarga de documentos",
+          "Libro de graduados actualizado en SharePoint",
+          "Firmas digitales gestionadas en Xertify",
+          "Reporte oficial para el cargue al SNIES"
+        ],
+        "sistemaApoyo": "Portal Estadístico ENAP; SharePoint; Xertify; correo institucional; SNIES"
       },
       {
-        "id": "3.6",
-        "stepNum": 6,
-        "titulo": "6. Entrega solemne de diplomas en ceremonia militar y académica",
-        "resumen": "El Secretario Académico coordina la ceremonia militar y académica, da lectura a la resolución y efectúa la entrega de diplomas a los graduados.",
-        "responsable": "Secretario Académico (con el Mando Naval)",
+        "id": "Etapa 8",
+        "stepNum": 9,
+        "fase": "Fase 4 · Formalización y cierre",
+        "titulo": "8. Resolución de grado",
+        "resumen": "La Secretaría Académica elabora y expide la resolución de grado: acto administrativo formal que reconoce y otorga el título académico a cada graduando.",
+        "responsable": "Secretaría Académica",
         "queSeHace": [
-          "Coordinación y ejecución de la solemne Ceremonia Militar y Académica de Graduación con honores navales en el Campo de Paradas / Aula Máxima.",
-          "Lectura solemne de la Resolución de Grado y del Acta General por parte del Secretario Académico.",
-          "Toma del juramento profesional y militar a los graduandos.",
-          "Entrega personal de diplomas y actas de grado por parte del Director de la ENAP y autoridades académicas.",
-          "Imposición de medallas y entrega de reconocimientos especiales a los 'Graduados de Honor' (Artículo 91).",
-          "Firma de la planilla oficial de entrega y constancia de recepción de títulos por cada graduado ante la Secretaría Académica.",
-          "Cierre definitivo de historias académicas y reporte final de graduados consolidados en el SNIES del MEN."
+          "Consolidación de la información validada y aprobada en las etapas 4 a 7.",
+          "Verificación del respaldo formal en los formatos de calificación de grado firmados por Jefe de Programa, Decano de Facultad y Decano Académico.",
+          "Redacción, sustentación y expedición de la Resolución de Grado institucional.",
+          "Promulgación oficial del acto administrativo formal que reconoce y otorga el título académico a cada graduando."
         ],
         "queSeNecesita": [
-          "Diplomas y actas oficiales emitidos por la Oficina de Estadística",
-          "Guión protocolario naval militar y orden del día",
-          "Medallas y distintivos de honor",
-          "Planilla oficial de firmas de entrega y recepción de diplomas",
-          "Sello seco institucional"
+          "Información validada y aprobada en las etapas 4 a 7",
+          "Formatos de calificación de grado firmados por las tres instancias",
+          "Marco normativo y numeración oficial de resoluciones de la ENAP"
         ],
-        "terminaCuando": "Cada graduado firma la recepción de su diploma, adquiere formalmente la calidad de Egresado/Titulado y se cierra el ciclo de titulación."
+        "terminaCuando": "Resolución de grado oficial expedida, numerada y firmada como acto administrativo formal vinculante.",
+        "entradas": ["Información validada y aprobada en las etapas 4 a 7", "Formatos de calificación de grado firmados"],
+        "salidas": ["Resolución de grado"],
+        "sistemaApoyo": "Secretaría Académica"
+      },
+      {
+        "id": "Etapa 9",
+        "stepNum": 10,
+        "fase": "Fase 4 · Formalización y cierre",
+        "titulo": "9. Impresión y entrega de diplomas",
+        "resumen": "El Jefe de Estadística imprime diplomas con firmas en Xertify; Secretaría Académica entrega en ceremonia y remite no reclamados mediante Señal para entrega directa.",
+        "responsable": "Jefe de Estadística (impresión) — Secretaría Académica (entrega)",
+        "queSeHace": [
+          "Impresión de los diplomas de cada graduando por el Jefe de Estadística una vez expedida la resolución y reunidas todas las firmas digitales necesarias en Xertify.",
+          "Entrega física solemne de los diplomas a cada graduando durante la ceremonia de grado, a cargo de la Secretaría Académica.",
+          "Identificación y custodia de los diplomas de los graduandos que no fueron entregados en la ceremonia.",
+          "Remisión de los diplomas no reclamados por parte de la Secretaría Académica a la Oficina de Estadística mediante una Señal interna institucional.",
+          "Entrega directa posterior de diplomas no reclamados al graduando por parte de la Oficina de Estadística, con lo cual se cierra formalmente el proceso."
+        ],
+        "queSeNecesita": [
+          "Resolución de grado expedida",
+          "Firmas digitales completas gestionadas a través de Xertify",
+          "Ceremonia oficial de grado",
+          "Formato institucional de Señal de entrega"
+        ],
+        "terminaCuando": "Diplomas entregados en ceremonia por Secretaría Académica o entregados directamente por Oficina de Estadística mediante Señal, cerrando formalmente el proceso.",
+        "entradas": ["Resolución de grado", "Firmas digitales gestionadas en Xertify"],
+        "salidas": [
+          "Diplomas impresos",
+          "Diplomas entregados en ceremonia",
+          "Señal de entrega de diplomas no reclamados en ceremonia, remitidos a la Oficina de Estadística"
+        ],
+        "sistemaApoyo": "Plataforma Xertify (impresión); ceremonia de grado (entrega); Oficina de Estadística (entrega posterior de diplomas no reclamados)"
       }
     ]
   }

@@ -261,52 +261,104 @@ export const DOCUMENTOS_EXPEDIENTE = [
 
 export const PASOS_OFICIALES_GRADUACION = [
   {
+    num: 0,
+    etapaId: 'Etapa 0',
+    fase: 'Fase 1 · Apertura y radicación',
+    titulo: 'Apertura de la ceremonia',
+    responsable: 'Secretaría Académica',
+    entidad: 'Portal Estadístico ENAP (Módulo Ceremonias - SAC)',
+    descripcion: 'La Secretaría Académica programa la ceremonia de grados, definiendo la fecha tentativa del evento y la ventana de fechas dentro de la cual los estudiantes pueden radicar su solicitud de grado por ceremonia. La opción por ventanilla permanece siempre disponible.',
+    icono: 'clock'
+  },
+  {
     num: 1,
-    titulo: 'El estudiante solicita',
-    responsable: 'Estudiante / Candidato a Grado',
-    entidad: 'Portal Público de Titulación ENAP',
-    descripcion: 'El estudiante solicita formalmente la titulación a través del portal público institucional, diligencia sus datos de filiación, autoriza el tratamiento de datos y adjunta los soportes requeridos (cédula al 150%, comprobantes de pago de derechos de grado y estampilla, diploma anterior y Saber Pro / TyT si aplica). Se le expide el radicado oficial SG-AAAAMMDD.',
+    etapaId: 'Etapa 1',
+    fase: 'Fase 1 · Apertura y radicación',
+    titulo: 'Radicación de la solicitud',
+    responsable: 'Estudiante',
+    entidad: 'Portal Estadístico ENAP (Módulo Radicación)',
+    descripcion: 'El estudiante inicia su solicitud (por ceremonia o ventanilla), ingresa datos personales y programa académico, carga los documentos requeridos según nivel (Pregrado/Posgrado) y condición (Civil/Militar). El sistema genera la autorización de tratamiento de datos, a la cual el estudiante le da clic (el estudiante no firma nada, solo le da clic a la autorización de datos).',
     icono: 'user'
   },
   {
     num: 2,
-    titulo: 'El jefe de programa aprueba y completa la información',
-    responsable: 'Jefe de Programa Académico',
-    entidad: 'Panel de Facultades (Autenticación OTP)',
-    descripcion: 'El jefe de programa accede con código OTP institucional de 6 dígitos, audita el cumplimiento del 100% del plan de estudios y requisitos de egreso, complementa la información cargando el balance académico, notas, certificado de promedio y actas de sustentación, otorga avales individuales a cada documento y solicita formalmente la titulación.',
+    etapaId: 'Etapa 2',
+    fase: 'Fase 2 · Validación académica',
+    titulo: 'Validación de programa',
+    responsable: 'Jefe de Programa',
+    entidad: 'Portal Estadístico ENAP (Aprobaciones de Grado)',
+    descripcion: 'El Jefe de Programa revisa la documentación radicada del estudiante, solicita ajustes si aplica y carga los documentos institucionales: Balance Académico, Formato de Calificación de Grado, Certificado de Promedio Ponderado, Señal de Certificación de Idioma (CIEN), Evaluación de Trabajo de Grado y Paz y Salvo. Notificación automática por correo al Decano de Facultad.',
     icono: 'check'
   },
   {
     num: 3,
-    titulo: 'El secretario Académico valida las solicitudes y solicita comité de decanos y consejo académico',
-    responsable: 'Secretario Académico',
-    entidad: 'Secretaría Académica ENAP',
-    descripcion: 'El Secretario Académico revisa y valida jurídicamente las solicitudes completas remitidas por los programas, coordina con el Comité de Decanos de Facultad y sustancía la inclusión del listado oficial de graduandos en el orden del día del Consejo Académico, estructurando el proyecto de Resolución de Grado.',
-    icono: 'file'
-  },
-  {
-    num: 4,
-    titulo: 'El consejo aprueba grados',
-    responsable: 'Consejo Académico (Presidido por el Director ENAP)',
-    entidad: 'Consejo Académico ENAP',
-    descripcion: 'El Consejo Académico sesiona bajo la presidencia del señor Contralmirante Director de la ENAP, delibera sobre los expedientes presentados, aprueba formalmente el otorgamiento de los títulos de pregrado y posgrado y las distinciones de honor (Art. 91), y promulga la Resolución de Grado como acto administrativo oficial vinculante.',
+    etapaId: 'Etapa 3',
+    fase: 'Fase 2 · Validación académica',
+    titulo: 'Revisión y aprobación de facultad',
+    responsable: 'Decano de Facultad',
+    entidad: 'Portal Estadístico ENAP (Panel Ejecutivo del Decano)',
+    descripcion: 'El Decano de Facultad revisa en bloque el grupo de graduandos de su facultad y lo aprueba con un solo clic, actualizando el estado a "Documentación completada". Firma digitalmente el formato de calificación de grado de su facultad, asumiendo la responsabilidad de requisitos académicos.',
     icono: 'award'
   },
   {
+    num: 4,
+    etapaId: 'Etapa 4',
+    fase: 'Fase 2 · Validación académica',
+    titulo: 'Validación y firma del Decano Académico',
+    responsable: 'Decano Académico',
+    entidad: 'Portal Estadístico ENAP (Panel Ejecutivo Decano Académico)',
+    descripcion: 'Revisa el grupo completo de graduandos de toda la institución (consolidado de todas las facultades) y lo aprueba en bloque con un solo clic a "Documentación completada" a nivel institucional. Firma digitalmente el formato institucional y notifica automáticamente al Secretario Académico.',
+    icono: 'shield'
+  },
+  {
     num: 5,
-    titulo: 'La oficina de Estadística registra y emite diplomas',
-    responsable: 'Oficina de Estadística y Registro',
-    entidad: 'Oficina de Estadística ENAP & SNIES / MEN',
-    descripcion: 'La Oficina de Estadística recibe la Resolución de Grado, efectúa el cotejo final con Registraduría Nacional, registra a los graduandos en los sistemas institucionales y en el SNIES del Ministerio de Educación Nacional, y EMITE los diplomas oficiales en cartulinas con hologramas de seguridad, gestionando su caligrafiado protocolario, folios en el Libro de Grados y las tres firmas del Mando Naval.',
+    etapaId: 'Etapa 5',
+    fase: 'Fase 3 · Aprobación institucional',
+    titulo: 'Validación institucional',
+    responsable: 'Secretario Académico',
+    entidad: 'Secretaría Académica & Portal Estadístico ENAP',
+    descripcion: 'Verifica que las carpetas digitales contengan la documentación completa y el Formato de Calificación esté firmado para cada estudiante. Genera el reporte descargable de graduandos, elabora el formato de presentación y solicita al Consejo Académico programar la sesión formal.',
+    icono: 'file'
+  },
+  {
+    num: 6,
+    etapaId: 'Etapa 6',
+    fase: 'Fase 3 · Aprobación institucional',
+    titulo: 'Aprobación del Consejo Académico',
+    responsable: 'Consejo Académico (Secretario Académico como Secretario)',
+    entidad: 'Sesión Formal del Consejo Académico',
+    descripcion: 'El Consejo Académico revisa y aprueba formalmente, en sesión con quórum reglamentario, el listado de graduandos presentado por la Secretaría Académica, autorizando el cierre académico del proceso de grado. El Secretario Académico elabora el Acta de Aprobación.',
+    icono: 'award'
+  },
+  {
+    num: 7,
+    etapaId: 'Etapa 7',
+    fase: 'Fase 4 · Formalización y cierre',
+    titulo: 'Gestión de cierre',
+    responsable: 'Jefe de Estadística',
+    entidad: 'Portal Estadístico, SharePoint, Xertify & SNIES',
+    descripcion: 'Cambia el estado a "Aprobado por Consejo Académico". Dispara correos de felicitación a estudiantes y acceso de descarga a decanos/jefes. Actualiza el Libro de Graduados en SharePoint, genera reporte para el SNIES del MEN y gestiona en Xertify la obtención de todas las firmas digitales requeridas.',
     destacado: true,
     icono: 'diploma'
   },
   {
-    num: 6,
-    titulo: 'El secretario académico entrega diplomas en ceremonia',
-    responsable: 'Secretario Académico & Mando Naval',
-    entidad: 'Campo de Paradas / Aula Máxima ENAP',
-    descripcion: 'El Secretario Académico coordina el protocolo de la solemne Ceremonia Militar y Académica de Graduación, da lectura solemne a la Resolución de Grado y al Acta General, y acompaña la entrega personal de los diplomas y actas de grado a los nuevos egresados, formalizando la firma del libro y cierre del ciclo de titulación.',
+    num: 8,
+    etapaId: 'Etapa 8',
+    fase: 'Fase 4 · Formalización y cierre',
+    titulo: 'Resolución de grado',
+    responsable: 'Secretaría Académica',
+    entidad: 'Secretaría Académica ENAP',
+    descripcion: 'Con base en la información validada y con el respaldo del Formato de Calificación de Grado firmado por Jefe de Programa, Decano de Facultad y Decano Académico, la Secretaría Académica elabora y expide la Resolución de Grado: acto administrativo formal que reconoce y otorga el título académico.',
+    icono: 'file'
+  },
+  {
+    num: 9,
+    etapaId: 'Etapa 9',
+    fase: 'Fase 4 · Formalización y cierre',
+    titulo: 'Impresión y entrega de diplomas',
+    responsable: 'Jefe de Estadística (impresión) — Secretaría Académica (entrega)',
+    entidad: 'Xertify, Ceremonia de Grados & Oficina de Estadística',
+    descripcion: 'El Jefe de Estadística imprime los diplomas con firmas en Xertify. La entrega física se realiza en ceremonia por Secretaría Académica. Los diplomas no reclamados en ceremonia se remiten mediante Señal interna a la Oficina de Estadística para entrega posterior directa, cerrando formalmente el proceso.',
     icono: 'grad'
   }
 ];
@@ -352,12 +404,12 @@ export const ProtocoloTitulacionModal: React.FC<ProtocoloTitulacionModalProps> =
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono font-bold tracking-widest text-[#C6A15B] bg-[#C6A15B]/10 px-2 py-0.5 rounded border border-[#C6A15B]/30 uppercase">
-                  Portal Oficial de Titulación ENAP
+                  Portal Oficial de Graduación y Titulación ENAP
                 </span>
                 <span className="text-[10px] font-mono text-slate-300">Reglamento Académico & SNIES</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-serif font-bold text-white tracking-tight mt-0.5">
-                Protocolo Institucional de Grados y Diplomas
+                Protocolo Institucional de Graduación y Titulación
               </h2>
             </div>
           </div>
@@ -381,7 +433,7 @@ export const ProtocoloTitulacionModal: React.FC<ProtocoloTitulacionModalProps> =
             }`}
           >
             <Sparkles className="w-4 h-4 text-[#C6A15B]" />
-            <span>Flujo Oficial (6 Pasos)</span>
+            <span>Flujo Oficial (10 Etapas)</span>
           </button>
 
           <button
@@ -470,18 +522,24 @@ export const ProtocoloTitulacionModal: React.FC<ProtocoloTitulacionModalProps> =
                     }`}
                   >
                     <div className="flex items-start gap-3.5">
-                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-mono font-extrabold text-sm shadow-2xs ${
+                      <div className={`w-10 h-10 rounded-xl flex flex-col items-center justify-center shrink-0 font-mono font-extrabold shadow-2xs ${
                         paso.destacado
                           ? 'bg-[#C6A15B] text-[#0A1F3C] border border-[#8A651E]'
                           : 'bg-[#0A1F3C] text-white'
                       }`}>
-                        0{paso.num}
+                        <span className="text-[10px] leading-none opacity-80">E</span>
+                        <span className="text-sm leading-none">{paso.num}</span>
                       </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                          <h4 className="text-sm font-bold text-[#0A1F3C] flex items-center gap-2">
+                          <h4 className="text-sm font-bold text-[#0A1F3C] flex items-center gap-2 flex-wrap">
                             <span>{paso.titulo}</span>
+                            {paso.fase && (
+                              <span className="text-[10px] font-bold text-[#8A651E] bg-[#C6A15B]/15 border border-[#C6A15B]/40 px-2 py-0.5 rounded">
+                                {paso.fase}
+                              </span>
+                            )}
                             {paso.destacado && (
                               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-200 text-amber-900 border border-amber-300">
                                 EMISIÓN OFICIAL

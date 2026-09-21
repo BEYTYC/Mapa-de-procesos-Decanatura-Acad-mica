@@ -37,6 +37,24 @@
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
 }
 
+/* Animación de pulso suave y halo blanco institucional para el escudo ENAP (#escudo) */
+#escudo {
+  transform-origin: center center;
+  will-change: transform, filter;
+  animation: escudoSoftPulse 3.4s ease-in-out infinite;
+}
+
+@keyframes escudoSoftPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+  }
+  50% {
+    transform: scale(1.045);
+    filter: drop-shadow(0 3px 9px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
+  }
+}
+
 /* --- ESTILOS DE MÓDULOS DE PROCESOS Y CAJAS 3D --- */
 
 .box-perspective-container {
@@ -72,7 +90,7 @@
   left: -2px;
   right: -2px;
   height: 38px;
-  background: linear-gradient(135deg, #0A1F3C 0%, #173763 100%);
+  background: linear-gradient(135deg, #12335E 0%, #1E4E8C 100%);
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
   border-bottom: 2px solid #C6A15B;

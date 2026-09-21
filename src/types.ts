@@ -11,6 +11,10 @@ export interface SubProcess {
   queSeHace: string[];
   queSeNecesita: string[];
   terminaCuando: string;
+  fase?: string;
+  entradas?: string[];
+  salidas?: string[];
+  sistemaApoyo?: string;
 }
 
 export interface Process {
