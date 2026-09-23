@@ -51,9 +51,9 @@ export const EditGateModal: React.FC<EditGateModalProps> = ({
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           className="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-2xl border-2 border-[#0A1F3C] overflow-hidden"
         >
-          <div className="bg-[#0A1F3C] px-6 py-4 text-white flex items-center justify-between border-b border-[#C6A15B]/30">
+          <div className="bg-[#0A1F3C] px-6 py-4 text-white flex items-center justify-between border-b border-white/10">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-[#C6A15B]/20 rounded-xl text-[#C6A15B]">
+              <div className="p-2 bg-white/10 border border-white/15 rounded-xl text-white">
                 <Edit3 className="w-5 h-5" />
               </div>
               <div>
@@ -157,9 +157,9 @@ export const EditGateModal: React.FC<EditGateModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-[#0A1F3C] hover:bg-[#102A50] text-white text-xs font-extrabold rounded-xl shadow-md flex items-center gap-2 border border-[#C6A15B]/50 transition-all cursor-pointer"
+                className="px-5 py-2.5 bg-[#0A1F3C] hover:bg-[#102A50] text-white text-xs font-bold rounded-xl shadow-md flex items-center gap-2 border border-slate-700 transition-all cursor-pointer"
               >
-                <Save className="w-4 h-4 text-[#C6A15B]" />
+                <Save className="w-4 h-4 text-white" />
                 Guardar Cambios
               </button>
             </div>

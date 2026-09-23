@@ -151,10 +151,6 @@ export default function App() {
     terminaCuando: ""
   };
 
-  const uniquePhases: string[] = Array.from(
-    new Set(activeProcess?.subprocesos?.map(s => s.fase).filter((f): f is string => Boolean(f)))
-  );
-
   // Guardar en localStorage automáticamente cada vez que appData cambie
   useEffect(() => {
     try {
@@ -1085,96 +1081,6 @@ export default function App() {
                 transition={{ duration: 0.35 }}
                 className="w-full flex flex-col items-center justify-start my-0 pb-16"
               >
-                {/* BARRA DE PROGRESO VISUAL Y ORIENTACIÓN DEL PROCESO — NIVEL 2 */}
-                <div className="w-full max-w-6xl mx-auto mb-4 sm:mb-5 bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs">
-                  <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-[#0A1F3C] text-[#C6A15B] flex items-center justify-center shrink-0 shadow-2xs">
-                        <Compass className="w-4 h-4 text-[#C6A15B]" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-mono text-[11px] font-bold text-[#0A1F3C] uppercase tracking-wider">
-                            {activeProcess.codigo} · {activeProcess.titulo}
-                          </span>
-                          <span className="text-[10px] font-mono font-bold text-[#8A651E] bg-[#C6A15B]/15 border border-[#C6A15B]/40 px-2 py-0.5 rounded-md">
-                            {activeProcess.subprocesos.length} Etapas Secuenciales
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-slate-500 font-medium">
-                          Flujo institucional completo · Haga clic en cualquier etapa para abrir su ficha operativa
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-mono font-bold text-[#0A1F3C] bg-slate-100 px-3 py-1 rounded-md border border-slate-200">
-                        {activeProcess.subprocesos.length} Pasos en Secuencia
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Desglose de Fases Institucionales (si están definidas) */}
-                  {uniquePhases.length > 1 && (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3.5 pt-2.5 border-t border-slate-100">
-                      {uniquePhases.map((fase, fIdx) => {
-                        const countInPhase = activeProcess.subprocesos.filter(s => s.fase === fase).length;
-                        return (
-                          <div 
-                            key={fIdx}
-                            className="bg-slate-50/80 border border-slate-200/80 rounded-xl p-2 sm:p-2.5 flex flex-col justify-between"
-                          >
-                            <span className="text-[10px] font-mono font-bold text-[#8A651E] uppercase tracking-wider">
-                              Fase {fIdx + 1}
-                            </span>
-                            <span className="text-[11px] font-bold text-[#0A1F3C] leading-snug line-clamp-1 mt-0.5">
-                              {fase.replace(/^Fase\s*\d+\s*·\s*/i, '')}
-                            </span>
-                            <span className="text-[9.5px] text-slate-500 font-mono mt-1">
-                              {countInPhase} {countInPhase === 1 ? 'etapa' : 'etapas'}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* Barra Visual de Progreso Integral */}
-                  <div className="relative pt-1">
-                    <div className="relative w-full h-2 bg-slate-100 rounded-full overflow-hidden mb-3 border border-slate-200/80 shadow-inner">
-                      <div 
-                        className="h-full bg-gradient-to-r from-[#0A1F3C] via-[#102A50] to-[#C6A15B] rounded-full transition-all duration-500" 
-                        style={{ width: '100%' }}
-                      />
-                    </div>
-
-                    {/* Fila interactiva de etapas */}
-                    <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 custom-scrollbar">
-                      {activeProcess.subprocesos.map((sub, i) => (
-                        <button
-                          key={sub.id}
-                          onClick={() => {
-                            setActiveSubIndex(i);
-                            setLevel(3);
-                          }}
-                          className="group flex-1 min-w-[72px] sm:min-w-[85px] p-2 rounded-xl bg-slate-50 hover:bg-[#0A1F3C] border border-slate-200 hover:border-[#0A1F3C] transition-all cursor-pointer text-left flex flex-col justify-between shadow-2xs hover:shadow-sm"
-                          title={`Etapa ${i}: ${sub.titulo} (${sub.responsable}) — Clic para abrir`}
-                        >
-                          <div className="flex items-center justify-between gap-1 mb-1">
-                            <span className="font-mono text-[10px] font-extrabold text-[#0A1F3C] group-hover:text-[#C6A15B] transition-colors">
-                              {sub.id}
-                            </span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#C6A15B] group-hover:bg-amber-300" />
-                          </div>
-                          <span className="text-[10px] sm:text-[10.5px] font-semibold text-slate-700 group-hover:text-white line-clamp-1 transition-colors leading-tight">
-                            {sub.titulo.replace(/^\d+\.\s*/, '')}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
                 {/* Encabezado del Proceso */}
                 <div className="text-center relative flex flex-col items-center justify-center shrink-0 mb-4">
                   <div className="flex items-center gap-2.5 sm:gap-3">

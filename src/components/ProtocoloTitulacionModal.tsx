@@ -836,7 +836,7 @@ export const ProtocoloTitulacionModal: React.FC<ProtocoloTitulacionModalProps> =
                   <div className="bg-white p-3.5 rounded-xl border border-slate-200">
                     <span className="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">SNIES / MEN</span>
                     <h4 className="text-xs font-bold text-[#0A1F3C] mt-1">Validación Estadística y Reporte MEN</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">Jefatura de Estadística coteja bases contra Registraduría y precarga el reporte técnico de graduados ante el Ministerio de Educación Nacional.</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Jefe de Estadística coteja bases contra Registraduría y precarga el reporte técnico de graduados ante el Ministerio de Educación Nacional.</p>
                   </div>
                 </div>
               </div>

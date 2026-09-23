@@ -430,7 +430,7 @@ export const INITIAL_PROCESOS: Record<string, Process> = {
         "stepNum": 8,
         "fase": "Fase 4 · Formalización y cierre",
         "titulo": "7. Gestión de cierre",
-        "resumen": "Jefatura de Estadística actualiza el sistema a 'Aprobado', envía correos de felicitación y acceso, actualiza SharePoint, gestiona firmas en Xertify y reporta a SNIES.",
+        "resumen": "Jefe de Estadística actualiza el sistema a 'Aprobado', envía correos de felicitación y acceso, actualiza SharePoint, gestiona firmas en Xertify y reporta a SNIES.",
         "responsable": "Jefe de Estadística",
         "queSeHace": [
           "Actualización del estado del registro a 'Aprobado por Consejo Académico' en el Portal Estadístico ENAP con acta en mano.",

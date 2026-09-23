@@ -62,7 +62,7 @@ export const AdminToolbar: React.FC<AdminToolbarProps> = ({
   };
 
   return (
-    <div className="bg-[#0A1F3C] text-white border-b-2 border-[#C6A15B] px-4 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-md z-40 relative">
+    <div className="bg-[#0A1F3C] text-white border-b border-white/10 px-4 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-3 shadow-md z-40 relative">
       <input
         type="file"
         ref={fileInputRef}
@@ -77,11 +77,11 @@ export const AdminToolbar: React.FC<AdminToolbarProps> = ({
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-200">
-          <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
+        <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-100">
+          <ShieldCheck className="w-4 h-4 text-emerald-400" />
           <span>ADMINISTRADOR ACTIVO</span>
         </div>
-        <span className="hidden sm:inline text-slate-400 text-xs">|</span>
+        <span className="hidden sm:inline text-white/20 text-xs">|</span>
         <span className="hidden md:inline text-[11px] text-slate-300 font-medium">
           Cambios sincronizados automáticamente
         </span>
@@ -94,7 +94,7 @@ export const AdminToolbar: React.FC<AdminToolbarProps> = ({
           onClick={onToggleEditMode}
           className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer border ${
             isEditMode 
-              ? "bg-[#C6A15B] text-[#0A1F3C] border-[#C6A15B] shadow-sm font-extrabold" 
+              ? "bg-blue-600 hover:bg-blue-500 text-white border-blue-400 shadow-sm font-extrabold" 
               : "bg-white/10 text-slate-200 border-white/20 hover:bg-white/20"
           }`}
           title="Activar/desactivar botones de edición en todas las cajas y textos"
@@ -109,7 +109,7 @@ export const AdminToolbar: React.FC<AdminToolbarProps> = ({
           className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15 transition-colors flex items-center gap-1.5 cursor-pointer"
           title="Descargar copia de seguridad en JSON"
         >
-          <Download className="w-3.5 h-3.5 text-[#C6A15B]" />
+          <Download className="w-3.5 h-3.5 text-slate-300" />
           <span className="hidden sm:inline">Exportar</span>
         </button>
 
@@ -119,7 +119,7 @@ export const AdminToolbar: React.FC<AdminToolbarProps> = ({
           className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15 transition-colors flex items-center gap-1.5 cursor-pointer"
           title="Cargar copia de seguridad desde JSON"
         >
-          <Upload className="w-3.5 h-3.5 text-[#C6A15B]" />
+          <Upload className="w-3.5 h-3.5 text-slate-300" />
           <span className="hidden sm:inline">Importar</span>
         </button>
 

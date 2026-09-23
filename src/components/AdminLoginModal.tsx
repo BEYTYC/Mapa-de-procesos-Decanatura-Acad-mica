@@ -50,15 +50,15 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
           className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl border-2 border-[#0A1F3C] overflow-hidden"
         >
           {/* Header */}
-          <div className="bg-[#0A1F3C] px-6 py-5 text-white flex items-center justify-between border-b border-[#C6A15B]/30">
+          <div className="bg-[#0A1F3C] px-6 py-5 text-white flex items-center justify-between border-b border-white/10">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-[#C6A15B]/20 border border-[#C6A15B]/50 rounded-xl text-[#C6A15B]">
+              <div className="p-2.5 bg-white/10 border border-white/15 rounded-xl text-white">
                 <KeyRound className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="font-extrabold text-base leading-tight flex items-center gap-2">
                   Acceso de Administrador
-                  <span className="text-[10px] font-mono text-[#C6A15B] bg-[#C6A15B]/15 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-mono font-bold text-white bg-blue-600 px-2 py-0.5 rounded-full shadow-xs">
                     ENAP
                   </span>
                 </h3>
@@ -70,7 +70,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
               title="Cerrar"
             >
               <X className="w-5 h-5" />
@@ -145,9 +145,9 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-[#0A1F3C] hover:bg-[#102A50] text-white text-xs font-extrabold rounded-xl shadow-md flex items-center gap-2 border border-[#C6A15B]/50 transition-all hover:shadow-lg cursor-pointer"
+                className="px-5 py-2.5 bg-[#0A1F3C] hover:bg-[#102A50] text-white text-xs font-bold rounded-xl shadow-md flex items-center gap-2 border border-slate-700 transition-all cursor-pointer"
               >
-                <ShieldCheck className="w-4 h-4 text-[#C6A15B]" />
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 Iniciar Sesión Admin
               </button>
             </div>
